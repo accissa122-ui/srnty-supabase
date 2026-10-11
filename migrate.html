@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>نقل البيانات من Firebase إلى Supabase</title>
+<style>
+ body{font-family:Tahoma,Arial,sans-serif;max-width:640px;margin:20px auto;padding:0 14px;line-height:1.7;color:#111}
+ fieldset{border:1px solid #ccc;border-radius:10px;margin:14px 0;padding:12px 14px}
+ legend{font-weight:700;padding:0 6px}
+ input{width:100%;padding:10px;margin:5px 0;box-sizing:border-box;border:1px solid #bbb;border-radius:8px;font-size:15px}
+ button{padding:12px 18px;border:0;border-radius:8px;background:#1d4ed8;color:#fff;font-size:16px;cursor:pointer}
+ button:disabled{opacity:.5}
+ #log{background:#0b1020;color:#c7f9cc;padding:12px;border-radius:10px;min-height:120px;white-space:pre-wrap;font-family:Consolas,monospace;font-size:13px;direction:rtl}
+ .warn{background:#fff7ed;border:1px solid #fdba74;padding:10px;border-radius:8px;font-size:14px}
+</style>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.104.0"></script>
+<script>
+ // بيانات Supabase: الرابط (Project URL) والمفتاح العام الذي يبدأ بـ sb_publishable_
+ window.SUPABASE_CONFIG = { url: "https://xsaoyqciefaaddnywhar.supabase.co", anon: "sb_publishable_dHU6C2lD2rXF_pnfxu_rMQ_FPcFZKzG" };
+ // بيانات Firebase القديم (نفس الموجودة في النسخة الحالية)
+ window.FIREBASE_CONFIG = {
+  apiKey: "AIzaSyC5o2GEUjeZkqJxVznEQTYDga5U6w-FUgM",
+  authDomain: "fixed-assets122.firebaseapp.com",
+  projectId: "fixed-assets122",
+  storageBucket: "fixed-assets122.firebasestorage.app",
+  messagingSenderId: "684926847236",
+  appId: "1:684926847236:web:7a8bfa2739d0bae562a851"
+ };
+</script>
+</head>
+<body>
+<h2>نقل البيانات من Firebase إلى Supabase</h2>
+<div class="warn">
+ قبل البدء: أنشئ حساب المدير في نسخة Supabase أولاً (شاشة «إعداد النظام»). هذه الأداة <b>تقرأ فقط من Firebase</b> ولا تغيّر فيه شيئاً،
+ وتنقل: الأصول، الغرف، الأصناف، المجموعات، الفئات، الإشعارات والعدادات. حسابات المستخدمين لا تُنقل (ينشئها المدير من جديد).
+ تستهلك قراءة واحدة لكل مستند من حصة Firebase اليومية، فشغّلها بعد تصفير الحصة.
+</div>
+
+<fieldset><legend>1) الدخول إلى Firebase (حساب المدير القديم)</legend>
+ <input id="fu" placeholder="اسم المستخدم" autocomplete="off">
+ <input id="fp" type="password" placeholder="كلمة المرور" autocomplete="off">
+</fieldset>
+<fieldset><legend>2) الدخول إلى Supabase (حساب المدير الجديد)</legend>
+ <input id="se" type="email" placeholder="البريد الإلكتروني الذي أنشأت به المدير" autocomplete="off">
+ <input id="sp" type="password" placeholder="كلمة المرور" autocomplete="off">
+</fieldset>
+<button id="go">بدء النقل</button>
+<h3>السجل</h3>
+<div id="log"></div>
+
+<script>
+const $ = i => document.getElementById(i);
+const log = m => { $('log').textContent += m + '\n'; $('log').scrollTop = 1e9; };
+const COLS = ['assets', 'rooms', 'items', 'cgroups', 'groups', 'meta', 'notifs'];
+const chunk = (a, n) => { const r = []; for (let i = 0; i < a.length; i += n) r.push(a.slice(i, i + n)); return r; };
+const clean = d => JSON.parse(JSON.stringify(d));
+
+$('go').onclick = async () => {
+  const sc = window.SUPABASE_CONFIG;
+  if (/PASTE/.test(sc.url + sc.anon)) { alert('ضع رابط ومفتاح Supabase داخل الملف أولاً'); return; }
+  const fu = $('fu').value.trim(), fp = $('fp').value, se = $('se').value.trim(), sp = $('sp').value;
+  if (!fu || !fp || !se || !sp) { alert('أكمل كل الحقول'); return; }
+  $('go').disabled = true; $('log').textContent = '';
+  try {
+    // --- Firebase: دخول + قراءة ---
+    firebase.initializeApp(window.FIREBASE_CONFIG);
+    const fs = firebase.firestore();
+    log('دخول Firebase…');
+    const lg = await fs.doc('logins/' + encodeURIComponent(fu.toLowerCase())).get();
+    if (!lg.exists) throw new Error('اسم المستخدم غير موجود في Firebase');
+    await firebase.auth().signInWithEmailAndPassword(lg.data().email, fp);
+    const data = {};
+    for (const c of COLS) {
+      log('قراءة ' + c + '…');
+      const snap = await fs.collection(c).get();
+      const rows = [];
+      snap.forEach(d => {
+        if (c === 'meta' && d.id === 'setup') return;           // لا نكتب فوق إعداد النظام الجديد
+        const x = d.data();
+        if (c === 'assets' && d.id.startsWith('_b') && x.m) {     // حزم (إن وُجدت)
+          Object.keys(x.m).forEach(id => rows.push({ id, data: clean(x.m[id]) }));
+        } else rows.push({ id: d.id, data: clean(x) });
+      });
+      data[c] = rows;
+      log('  ' + c + ': ' + rows.length + ' مستند');
+    }
+    await firebase.auth().signOut();
+
+    // --- Supabase: دخول + كتابة ---
+    const sb = supabase.createClient(sc.url, sc.anon, { auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false } });
+    log('دخول Supabase…');
+    const { error: ae } = await sb.auth.signInWithPassword({ email: se, password: sp });
+    if (ae) throw new Error('تعذّر دخول Supabase: ' + ae.message);
+    for (const c of COLS) {
+      const rows = data[c]; let done = 0;
+      for (const part of chunk(rows, 300)) {
+        const { error } = await sb.from('c_' + c).upsert(part, { onConflict: 'id' });
+        if (error) throw new Error('فشل الكتابة في ' + c + ': ' + (error.message || error.code));
+        done += part.length; log('  كتابة ' + c + ': ' + done + ' / ' + rows.length);
+      }
+    }
+    // --- تحقق: العدد في Supabase ---
+    log('\nتحقق من الأعداد:');
+    for (const c of COLS) {
+      const { count, error } = await sb.from('c_' + c).select('id', { count: 'exact', head: true });
+      log('  ' + c + ': Firebase=' + data[c].length + ' | Supabase=' + (error ? 'خطأ' : count));
+    }
+    log('\nتم النقل. افتح نسخة Supabase وراجع الأصول.');
+  } catch (e) {
+    log('\nتوقف: ' + (e.code ? '(' + e.code + ') ' : '') + (e.message || e));
+  }
+  $('go').disabled = false;
+};
+</script>
+</body>
+</html>
