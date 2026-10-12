@@ -553,7 +553,7 @@ function bumpCtr(p){let ch=0;for(const k in p)if(p[k]>CTR[k]){CTR[k]=p[k];ch=1}
  if(ch&&window.FBC&&!window.FB_OFF)try{Promise.resolve(FBC('meta').doc('counters').set({code:CTR.code,ord:CTR.ord,og:CTR.og,tr:CTR.tr})).catch(()=>{})}catch(e){}}
 let NF=null,NSEEN=new Set(),ncol=null;
 const UDENY=new Set(['ra','rinc','rdec','rall','del','bkdel','unas','bkst','new','addr','assign','rimp','imp','addg','gadd','gren','gdel','addc','cadd','iren','idel','cren','cdel','addrooms','newr','wipe']);
-const NFm=()=>(NF||[]).filter(n=>n.to==(cu&&cu.u)||(n.to=='admin'&&cu&&cu.r=='admin')).sort((x,y)=>x.at<y.at?1:-1);
+const NFm=()=>(NF||[]).filter(n=>n.to==(cu&&cu.u)||(n.to=='admin'&&cu&&cu.r=='admin')||(n.to=='purchasing'&&cu&&cu.r=='purchasing')).sort((x,y)=>x.at<y.at?1:-1);
 function bellUpd(){const e=$('#bellb');if(!e)return;const n=NFm().filter(x=>!x.read).length;e.innerHTML='🔔'+(n?`<span class="bdg">${n>99?'99+':n}</span>`:'')}
 async function sendNotif(o){if(!ncol)throw 0;const id='n'+Date.now()+Math.random().toString(36).slice(2,6);return ncol.doc(id).set({...o,at:new Date().toISOString(),read:false})}
 const nsave=n=>{const{id,...d}=n;return ncol&&ncol.doc(n.id).set(d)};
@@ -592,7 +592,7 @@ function vP(){
  const nw=rpNew();
  return`<div class="bar"><b>${L.length} تقرير${nw?' · '+nw+' جديد':''}</b>${nw?bt('rpall','','تمييز الكل كمقروء'):''}</div>`+L.map(x=>{
   const isN=SEEN_RP&&!SEEN_RP.has(x.key),it=x.items.slice().sort((p,q)=>nat(p.a.code,q.a.code));
-  return`<div class="rm"><h4>إذن رقم ${esc(x.no)} ${isN?'<span class="g w">جديد</span>':''}<small>${fmt(x.at)}</small></h4><p class="s">إلى: ${esc(x.o.dest)||'—'} · أُنجز ${x.done} من ${x.total} · بواسطة: ${esc(x.by)||'—'}</p><div class="sc"><table><tr><th>الكود<th>الأصل<th>الورشة<th>أُعيد إلى<th>العمل المنجز</tr>${it.map(y=>`<tr><td>${esc(y.a.code)}<td>${esc(y.a.name)}<td>${esc(y.r.rep.ws)||'—'}<td>${esc(y.r.rep.to)||'المخزن'}<td>${esc(y.r.rep.t)}</tr>`).join('')}</table></div><div class="bar" style="margin-top:10px">${bt('repo',esc(x.no),'🖨 طباعة التقرير','p')}</div></div>`}).join('')
+  return`<div class="rm"><h4>إذن رقم ${esc(x.no)} ${isN?'<span class="g w">جديد</span>':''}<small>${fmt(x.at)}</small></h4><p class="s">إلى: ${esc(x.o.dest)||'—'} · أُنجز ${x.done} من ${x.total} · بواسطة: ${esc(x.by)||'—'}</p>${x.o.kind=='out'?purLine(x.no):''}<div class="sc"><table><tr><th>الكود<th>الأصل<th>الورشة<th>أُعيد إلى<th>العمل المنجز</tr>${it.map(y=>`<tr><td>${esc(y.a.code)}<td>${esc(y.a.name)}<td>${esc(y.r.rep.ws)||'—'}<td>${esc(y.r.rep.to)||'المخزن'}<td>${esc(y.r.rep.t)}</tr>`).join('')}</table></div><div class="bar" style="margin-top:10px">${bt('repo',esc(x.no),'🖨 طباعة التقرير','p')}</div></div>`}).join('')
 }
 let SEEN_MNT=null,OQ='',OT='in',RS=null,RQ='';
 function note(m,ms){const t=$('#t');t.textContent=m;t.hidden=false;clearTimeout(note.h);note.h=setTimeout(()=>t.hidden=true,ms||2600)}
@@ -695,10 +695,10 @@ async function adminSetUser(u,p,realEmail,role,ws){
  if(ex&&ex.uid!=cr.user.uid)b.delete(fs.doc('profiles/'+ex.uid));await b.commit()
 }
 async function adminDel(t){const fs=firebase.firestore(),b=fs.batch();b.delete(fs.doc('profiles/'+t.uid));b.delete(fs.doc('logins/'+lid(t.u)));await b.commit()}
-const roleLbl=x=>x.r=='admin'?'مدير':x.r=='maintenance'?'صيانة':'مستخدم';
+const roleLbl=x=>x.r=='admin'?'مدير':x.r=='maintenance'?'صيانة':x.r=='purchasing'?'المشتريات':'مستخدم';
 function usrRender(){
  const d=$('#d');
- d.innerHTML=`<div><h3>المستخدمون</h3><p class="s">أنشئ حسابًا لكل شخص ترسل له الرابط أو البرنامج، وأعطه اسم المستخدم وكلمة المرور.</p><ul class="h" style="max-height:32vh;padding:0;list-style:none">${[...US].sort((x,y)=>nat(x.u,y.u)).map(x=>`<li style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--b);padding:6px 0"><b>${esc(x.u)}</b><span class="g${x.r=='admin'?' o':''}">${esc(roleLbl(x))}</span><span style="margin-inline-start:auto">${x.uid!=(cu&&cu.uid)?bt('upw',esc(x.u),'كلمة مرور جديدة')+bt('udel',esc(x.u),UD==x.u?'تأكيد الحذف':'حذف','r'):''}</span></li>`).join('')}</ul><label>اسم المستخدم<input id="nu" autocomplete="off"></label><label>البريد الإلكتروني (اختياري، لاستعادة كلمة المرور)<input id="ne" type="email" autocomplete="off"></label><label>كلمة المرور (8 أحرف على الأقل، حروف وأرقام)<input id="np" type="password" autocomplete="new-password"></label><label>الصلاحية<select id="nr"><option value="user">مستخدم (كل الشاشات)</option><option value="maintenance">صيانة (يوجّه الطلبات للورش)</option><option value="admin">مدير</option></select></label><div class="bt"><button type="button" class="p" data-x="uadd2">حفظ (إضافة / تحديث كلمة المرور)</button><button type="button" data-x="uclose">إغلاق</button></div></div>`;
+ d.innerHTML=`<div><h3>المستخدمون</h3><p class="s">أنشئ حسابًا لكل شخص ترسل له الرابط أو البرنامج، وأعطه اسم المستخدم وكلمة المرور.</p><ul class="h" style="max-height:32vh;padding:0;list-style:none">${[...US].sort((x,y)=>nat(x.u,y.u)).map(x=>`<li style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--b);padding:6px 0"><b>${esc(x.u)}</b><span class="g${x.r=='admin'?' o':''}">${esc(roleLbl(x))}</span><span style="margin-inline-start:auto">${x.uid!=(cu&&cu.uid)?bt('upw',esc(x.u),'كلمة مرور جديدة')+bt('udel',esc(x.u),UD==x.u?'تأكيد الحذف':'حذف','r'):''}</span></li>`).join('')}</ul><label>اسم المستخدم<input id="nu" autocomplete="off"></label><label>البريد الإلكتروني (اختياري، لاستعادة كلمة المرور)<input id="ne" type="email" autocomplete="off"></label><label>كلمة المرور (8 أحرف على الأقل، حروف وأرقام)<input id="np" type="password" autocomplete="new-password"></label><label>الصلاحية<select id="nr"><option value="user">مستخدم (كل الشاشات)</option><option value="maintenance">صيانة (يوجّه الطلبات للورش)</option><option value="purchasing">المشتريات (الصيانة الخارجية والتكلفة)</option><option value="admin">مدير</option></select></label><div class="bt"><button type="button" class="p" data-x="uadd2">حفظ (إضافة / تحديث كلمة المرور)</button><button type="button" data-x="uclose">إغلاق</button></div></div>`;
  
 }
 function usr(){const d=$('#d');d.style.width='';d.onkeydown=null;UD='';d.dataset.k='usr';d.onclose=()=>{d.dataset.k='';d.returnValue=''};usrRender();d.showModal()}
@@ -1080,9 +1080,9 @@ function nextOrd(){let m=CTR.ord;A.forEach(a=>ordsOf(a).forEach(r=>{if(r.kind=='
 function mntOrder(L,why){
  L=(L||[]).filter(a=>a&&!a.mnt);if(!L.length)return note('الأصول المحددة في الصيانة بالفعل');
  ask('إرسال للصيانة — إذن جديد',[{l:'سبب الصيانة / العطل',v:why||'',r:1},{l:'المكان المنقول إليه',dl:'wl',r:1},{l:'اسم مستلم الإذن',r:1},{l:'ملاحظات'},{l:'نوع الصيانة',o:-1,r:1,sel:['داخل الفندق','OUT GOING — إصلاح خارج الفندق'],v:'داخل الفندق',h:'OUT GOING: اكتب في «المكان المنقول إليه» اسم الجهة الخارجية، وله ترقيم إذونات مستقل'}],v=>{
-  const out=/^OUT/.test(v[4]),n=out?nextOG():+nextOrd(),no=out?'OG-'+String(n).padStart(4,'0'):String(n);bumpCtr(out?{og:n}:{ord:n});const ord={no,date:new Date().toISOString(),dest:v[1],rcv:v[2],notes:v[3],reason:v[0],...(out?{kind:'out'}:{})};
+  const out=/^OUT/.test(v[4]),n=out?nextOG():+nextOrd(),no=out?'OG-'+String(n).padStart(4,'0'):String(n);bumpCtr(out?{og:n}:{ord:n});const ord={no,date:new Date().toISOString(),dest:v[1],rcv:v[2],notes:v[3],reason:v[0],...(out?{kind:'out',pur:{st:'new'}}:{})};
   L.forEach(a=>{const o=ordsOf(a).slice();o.push({...ord,room:a.room||''});a.ords=o;delete a.ord;doMnt(a,v[0],'')});
-  note('تم إنشاء الإذن رقم '+no);toAdmin('إذن صيانة '+no+' بواسطة '+cu.u+': '+L.length+' أصل');printOrder(no,L)},0,`<p>${L.length} أصل: ${esc(L.slice(0,4).map(a=>a.name+' '+a.code).join('، '))}${L.length>4?' …':''}</p>`)
+  note('تم إنشاء الإذن رقم '+no);toAdmin('إذن صيانة '+no+' بواسطة '+cu.u+': '+L.length+' أصل');if(out)sendNotif({to:'purchasing',kind:'info',msg:'📦 أوردر صيانة خارجية جديد '+no+' ('+L.length+' أصل) إلى '+(v[1]||'—')+' — بانتظار تأكيد الخروج'}).catch(()=>{});printOrder(no,L)},0,`<p>${L.length} أصل: ${esc(L.slice(0,4).map(a=>a.name+' '+a.code).join('، '))}${L.length>4?' …':''}</p>`)
 }
 const ordItems=(no,L)=>(L||A).map(a=>({a,r:ordsOf(a).find(r=>r.no==no)})).filter(x=>x.r).sort((x,y)=>nat(x.a.code,y.a.code)),
  dEn=t=>new Date(t).toLocaleDateString('en-GB'),
@@ -1102,7 +1102,7 @@ function printOrder(no,L){
 function printReport(no){
  const all=ordItems(no),I=all.filter(x=>x.r.rep);if(!I.length)return note('لا يوجد تقرير صيانة لهذا الإذن');
  const o=I[0].r,p=$('#pr'),by=[...new Set(I.map(x=>x.r.rep.by).filter(Boolean))].join(', ');
- p.innerHTML=pbar+`<div class="pg en" dir="ltr">${phd(o.kind=='out'?'Out-Going Completion Report':'Maintenance Completion Report',no)}<div class="pb"><div class="og">${pf('Order No.',no)}${pf('Order date',dEn(o.date))}${pf('Sent to',o.dest)}${pf('Items completed',I.length+' of '+all.length)}${pf('Reported by',by)}${pf('Report date',dEn(I[I.length-1].r.rep.at))}</div>`+
+ p.innerHTML=pbar+`<div class="pg en" dir="ltr">${phd(o.kind=='out'?'Out-Going Completion Report':'Maintenance Completion Report',no)}<div class="pb"><div class="og">${pf('Order No.',no)}${pf('Order date',dEn(o.date))}${pf('Sent to',o.dest)}${pf('Items completed',I.length+' of '+all.length)}${pf('Reported by',by)}${pf('Report date',dEn(I[I.length-1].r.rep.at))}${o.kind=='out'?pf('Maintenance cost / payment',purEn(no),1):''}</div>`+
  `<table><tr><th class="m">#<th>Code<th>Item<th>Workshop<th>Completed<th>Returned to<th>Work done</tr>${I.map((x,i)=>`<tr><td class="m">${i+1}<td>${esc(x.a.code)}<td dir="auto">${esc(x.a.name)}<td dir="auto">${esc(x.r.rep.ws)||'—'}<td>${dEn(x.r.rep.at)}<td dir="auto">${esc(x.r.rep.to)||'Store'}<td dir="auto">${esc(x.r.rep.t)}</tr>`).join('')}</table></div>${pft}</div>`;
  p.classList.add('on');p.scrollTop=0
 }
@@ -1123,7 +1123,7 @@ function ordRes(){
  if(!it.length)return`<div class="em">لا يوجد ${lbl} بهذا الرقم</div>`;
  const no=it[0].r.no,L=it.filter(x=>x.r.no==no).sort((x,y)=>nat(x.a.code,y.a.code)),o=L[0].r,done=L.filter(x=>x.r.rep).length,adm=cu&&cu.r=='admin',
  st=x=>x.r.rep?`<span class="g o">تمت الصيانة</span> ${fmt(x.r.rep.at)}${x.r.rep.to?' ← '+esc(x.r.rep.to):''}`:(x.a.mnt&&((ordsOf(x.a).slice(-1)[0]||{}).no==no)?`<span class="g w">في الصيانة</span>${x.a.workshop?' · '+esc(x.a.workshop):' · بانتظار التوجيه'}`:'—');
- return`<div class="rm"><h4>إذن رقم ${esc(no)}<small>${fmt(o.date)}</small></h4><p class="s">إلى: ${esc(o.dest)||'—'} · المستلم: ${esc(o.rcv)||'—'} · السبب: ${esc(o.reason)||'—'}${o.notes?' · ملاحظات: '+esc(o.notes):''}</p><div class="sc"><table><tr><th>الكود<th>الأصل<th>الحالة<th>تقرير الصيانة</tr>${L.map(x=>`<tr><td>${esc(x.a.code)}<td>${esc(x.a.name)}<td>${st(x)}<td>${x.r.rep?esc(x.r.rep.t)+`<br><small class="s">${esc(x.r.rep.by||'')}</small>`:'—'}</tr>`).join('')}</table></div><div class="bar" style="margin-top:10px">${bt('ordp',esc(no),'🖨 طباعة الإذن','p')}${adm&&done?bt('repp',esc(no),'🖨 طباعة تقرير الصيانة'):''}</div></div>`
+ return`<div class="rm"><h4>إذن رقم ${esc(no)}<small>${fmt(o.date)}</small></h4><p class="s">إلى: ${esc(o.dest)||'—'} · المستلم: ${esc(o.rcv)||'—'} · السبب: ${esc(o.reason)||'—'}${o.notes?' · ملاحظات: '+esc(o.notes):''}</p>${OT=='out'?purLine(no):''}<div class="sc"><table><tr><th>الكود<th>الأصل<th>الحالة<th>تقرير الصيانة</tr>${L.map(x=>`<tr><td>${esc(x.a.code)}<td>${esc(x.a.name)}<td>${st(x)}<td>${x.r.rep?esc(x.r.rep.t)+`<br><small class="s">${esc(x.r.rep.by||'')}</small>`:'—'}</tr>`).join('')}</table></div><div class="bar" style="margin-top:10px">${bt('ordp',esc(no),'🖨 طباعة الإذن','p')}${adm&&done?bt('repp',esc(no),'🖨 طباعة تقرير الصيانة'):''}</div></div>`
 }
 function vO(){const T=[['in','إذونات الصيانة الداخلية'],['out','OUT GOING'],['tr','النقل (Transfer)']];return`<div class="bar">${T.map(([k,l])=>`<button data-x="otype" data-i="${k}"${OT==k?' class="p"':''}>${l}</button>`).join('')}${cu&&cu.r=='admin'?'<button class="r" data-x="ocan" style="margin-inline-start:auto">↩ Undo</button>':''}</div><div class="bar"><input id="oq" inputmode="numeric" placeholder="${OT=='in'?'رقم إذن الصيانة':OT=='out'?'رقم أوردر OUT GOING':'رقم أوردر النقل'}" value="${esc(OQ)}"></div><div id="ores">${ordRes()}</div>`}
 const back=a=>fin([a]);
@@ -1177,11 +1177,143 @@ function vM0(){
  const L=A.filter(a=>a.mnt&&!isOut(a)).sort((x,y)=>(x.since<y.since?-1:1)),rc=a=>{const o=ordsOf(a),r=o[o.length-1];return r&&!r.rep?r.no:''};
  return L.length?`<div class="bar"><button class="p" data-x="mfin">إنهاء الصيانة للمحدد وإرجاعه للعمل</button></div><div class="sc"><table><tr><th><input type="checkbox" id="mka"><th>رقم الإذن<th>الكود<th>الأصل<th>السبب<th>الورشة<th>من<th>منذ<th></tr>`+L.map(a=>`<tr><td><input type="checkbox" class="mk" value="${a.id}"><td>${esc(rc(a))||'—'}<td>${esc(a.code)}<td>${esc(a.name)}<td>${esc(a.reason)}<td><select class="dw" data-i="${a.id}"><option value="">— وجّه للورشة —</option>${WORKSHOPS.map(w=>`<option value="${esc(w)}"${a.workshop==w?' selected':''}>${esc(w)}</option>`).join('')}</select><td>${esc(a.from)||'—'}<td>${fmt(a.since)}<td class="ac">${bt('back',a.id,'إنهاء الصيانة','p')}</tr>`).join('')+`</table></div>`:'<div class="em">لا توجد طلبات صيانة حاليًا</div>'
 }
-function topbar(){const T={p:'تقارير الصيانة',g:'الفئات والأصناف',r:'الغرف',v:sel,o:'الأذونات',a:'الأصول'},v=tab=='v';return`<div class="top"><button class="bk" data-tab="${v?'r':'h'}">${IC.back}<span>${v?'الغرف':'الرئيسية'}</span></button><b>${esc(T[tab]||'')}</b></div>`}
+// ===== المشتريات: أوردرات الصيانة الخارجية (OUT GOING) =====
+const money=n=>(+n||0).toLocaleString('en-US',{maximumFractionDigits:2})+' ج.م',
+ PAYC={cash:'نقدًا (تم الدفع)',credit:'آجل (مستحق للمورد)'};
+let XM='all',XP='all';
+const isPur=()=>!!(cu&&cu.r=='purchasing');
+const liveItems=x=>x.items.filter(i=>i.a.mnt&&!i.r.rep&&(ordsOf(i.a).slice(-1)[0]||{}).no==x.no);
+function outOrders(){const m=new Map();A.forEach(a=>ordsOf(a).forEach(r=>{if(r.kind!='out')return;let x=m.get(r.no);if(!x){x={no:r.no,o:r,items:[]};m.set(r.no,x)}x.items.push({a,r})}));return[...m.values()].sort((p,q)=>String(p.o.date)<String(q.o.date)?1:-1)}
+const outSt=x=>{const L=liveItems(x);if(!L.length)return'back';return L.some(i=>i.r.pur&&i.r.pur.st=='out')?'out':'new'};
+const outDone=x=>{const i=x.items.find(i=>i.r.pur&&i.r.pur.st=='back');return i?i.r.pur:null};
+const stLbl=s=>s=='back'?'<span class="g o">عاد</span>':s=='out'?'<span class="g w">خرج للصيانة</span>':'<span class="g">لم يخرج بعد</span>';
+const payTx=d=>d?(d.pay=='cash'?'نقدًا':'آجل'):'—';
+const numIn=s=>{const n=parseFloat(String(s).replace(/[^\d.,-]/g,'').replace(',','.'));return isFinite(n)?n:NaN};
+const findOut=no=>outOrders().find(y=>String(y.no)==String(no));
+function purOut(no){
+ const x=findOut(no),L=x?liveItems(x):[];if(!L.length)return note('الأوردر غير موجود أو انتهى');
+ ask('تأكيد خروج الأوردر '+esc(no),[{l:'ملاحظات الخروج (اختياري)'}],v=>{
+  const at=new Date().toISOString();
+  L.forEach(i=>{i.r.pur={...(i.r.pur||{}),st:'out',outAt:at,outBy:cu.u};lg(i.a,'خرج للصيانة الخارجية — أوردر '+no+(x.o.dest?' إلى '+x.o.dest:'')+(v[0]?' — '+v[0]:''))});
+  putMany(L.map(i=>i.a));note('تم تأكيد خروج الأوردر '+no);
+  toAdmin('🚚 الأوردر '+no+' خرج للصيانة الخارجية'+(x.o.dest?' إلى '+x.o.dest:'')+' ('+L.length+' أصل) — بواسطة '+cu.u)
+ },0,`<p>${L.length} أصل · ${esc(x.o.dest)||'—'}</p>`)
+}
+function purUndo(no){
+ const x=findOut(no),L=x?liveItems(x).filter(i=>i.r.pur&&i.r.pur.st=='out'):[];if(!L.length)return note('لا يوجد ما يُتراجع عنه');
+ ask('التراجع عن «خرج»',[],()=>{
+  L.forEach(i=>{i.r.pur={...i.r.pur,st:'new',outAt:'',outBy:''};lg(i.a,'أُلغي تأكيد خروج الأوردر '+no)});
+  putMany(L.map(i=>i.a));note('تم التراجع');toAdmin('↩ الأوردر '+no+' لم يخرج بعد (تراجع من '+cu.u+')')
+ },1,`<p>سيعود الأوردر ${esc(no)} إلى حالة «لم يخرج بعد».</p>`)
+}
+function purBack(no){
+ const x=findOut(no),L=x?liveItems(x):[];if(!L.length)return note('الأوردر غير موجود أو انتهى');
+ if(outSt(x)!='out')return note('أكّد خروج الأوردر أولًا');
+ const rooms=[...new Set(L.map(i=>i.a.from||'المخزن'))].join('، ');
+ ask('تأكيد رجوع الأوردر '+esc(no),[{l:'تكلفة الصيانة (إجمالي الأوردر) بالجنيه',t:'number',r:1,h:'اكتب 0 إن لم تكن هناك تكلفة'},{l:'طريقة الدفع',sel:[PAYC.cash,PAYC.credit],r:1},{l:'اسم المورد / الورشة الخارجية',v:x.o.dest||'',r:1},{l:'ما تم إصلاحه (اختياري)',ta:1}],v=>{
+  const cost=numIn(v[0]);if(!(cost>=0))return note('اكتب تكلفة صحيحة');
+  const pay=v[1]==PAYC.cash?'cash':'credit',vendor=v[2],at=new Date().toISOString(),n=L.length;
+  const txt=money(cost)+' — '+(pay=='cash'?'مدفوعة نقدًا':'آجل مستحق للمورد «'+vendor+'»');
+  L.forEach(i=>{const a=i.a,to=a.from||'';
+   i.r.rep={t:v[3]||'صيانة خارجية',at,by:cu.u,ws:vendor,to};
+   i.r.pur={...(i.r.pur||{}),st:'back',backAt:at,backBy:cu.u,cost,pay,vendor,n};
+   lg(a,'عاد من الصيانة الخارجية (أوردر '+no+') إلى '+(to||'المخزن')+' — تكلفة الأوردر '+money(cost)+(n>1?' (إجمالي لـ '+n+' أصول)':'')+' — '+(pay=='cash'?'مدفوعة نقدًا':'آجل مستحق للمورد «'+vendor+'»'));
+   Object.assign(a,{mnt:false,room:to,reason:'',workshop:'',from:'',since:''})});
+  putMany(L.map(i=>i.a));note('تم تأكيد رجوع الأوردر '+no);
+  toAdmin('✅ الأوردر '+no+' رجع إلى غرفته الأصلية ('+rooms+') — '+n+' أصل — التكلفة '+txt)
+ },0,`<p>${L.length} أصل سيعود إلى: ${esc(rooms)}</p>`)
+}
+function vPur(){
+ const O=outOrders(),live=O.filter(x=>liveItems(x).length),done=O.filter(x=>outSt(x)=='back'&&outDone(x)).slice(0,15);
+ const card=x=>{const L=liveItems(x).sort((p,q)=>nat(p.a.code,q.a.code)),st=outSt(x),p=(L.find(i=>i.r.pur)||{r:{}}).r.pur||{};
+  return`<div class="rm"><h4>أوردر ${esc(x.no)} ${stLbl(st)}<small>${fmt(x.o.date)}</small></h4><p class="s">إلى: ${esc(x.o.dest)||'—'} · المستلم: ${esc(x.o.rcv)||'—'} · السبب: ${esc(x.o.reason)||'—'}${st=='out'&&p.outAt?' · خرج: '+fmt(p.outAt):''}</p><div class="sc"><table><tr><th>الكود<th>الأصل<th>الغرفة الأصلية</tr>${L.map(i=>`<tr><td>${esc(i.a.code)}<td>${esc(i.a.name)}<td>${esc(i.a.from)||'المخزن'}</tr>`).join('')}</table></div><div class="bar" style="margin-top:10px">${st=='new'?bt('pout',esc(x.no),'🚚 تأكيد خروج الأوردر','p'):bt('pback',esc(x.no),'✅ تأكيد الرجوع وإدخال التكلفة','p')+bt('pundo',esc(x.no),'↩ لم يخرج')}${bt('ordp',esc(x.no),'🖨 طباعة الإذن')}</div></div>`};
+ return(live.length?live.map(card).join(''):'<div class="em">لا توجد أوردرات صيانة خارجية حاليًا</div>')+(done.length?`<h4 style="margin:18px 0 6px">آخر الأوردرات المنتهية</h4><div class="sc"><table><tr><th>الأوردر<th>الجهة<th>رجع في<th>التكلفة<th>الدفع</tr>${done.map(x=>{const d=outDone(x);return`<tr><td>${esc(x.no)}<td>${esc(d.vendor)||'—'}<td>${fmt(d.backAt)}<td>${money(d.cost)}<td>${payTx(d)}</tr>`}).join('')}</table></div>`:'')
+}
+const inPeriod=t=>{if(XM=='all')return true;const d=new Date(t),n=new Date(),y=n.getFullYear(),m=n.getMonth(),p=XM=='cur'?new Date(y,m,1):new Date(y,m-1,1);return d.getFullYear()==p.getFullYear()&&d.getMonth()==p.getMonth()};
+function xRows(){return outOrders().map(x=>{const d=outDone(x);return{x,s:outSt(x),d,t:(d&&d.backAt)||x.o.date}}).filter(r=>inPeriod(r.t)&&(XP=='all'||(r.d&&r.d.pay==XP)))}
+const jeBay=r=>'صيانة خارجية — أوردر '+r.x.no+' — '+(r.d.n||r.x.items.length)+' أصل — '+(r.d.vendor||'');
+const jeBayH=r=>'صيانة خارجية — أوردر <bdi>'+esc(r.x.no)+'</bdi> — <bdi>'+(r.d.n||r.x.items.length)+'</bdi> أصل — '+esc(r.d.vendor||'');
+const jeCr=d=>d.pay=='cash'?'الصندوق / النقدية':'الموردين — '+(d.vendor||'');
+function vX(){
+ const R=xRows(),D=R.filter(r=>r.d),sum=a=>a.reduce((s,r)=>s+(+r.d.cost||0),0),tot=sum(D),cash=sum(D.filter(r=>r.d.pay=='cash')),cr=tot-cash;
+ const JE=D.filter(r=>+r.d.cost>0).sort((p,q)=>String(p.d.backAt)<String(q.d.backAt)?1:-1),jt=sum(JE),V={};
+ D.filter(r=>r.d.pay=='credit').forEach(r=>{const k=r.d.vendor||'—';V[k]=(V[k]||0)+(+r.d.cost||0)});
+ const bf=(k,cur,l,x)=>`<button data-x="${x}" data-i="${k}"${cur==k?' class="p"':''}>${l}</button>`;
+ return`<div class="bar">${bf('all',XM,'كل الفترات','xm')}${bf('cur',XM,'هذا الشهر','xm')}${bf('prev',XM,'الشهر الماضي','xm')}</div><div class="bar">${bf('all',XP,'كل طرق الدفع','xpm')}${bf('cash',XP,'نقدًا','xpm')}${bf('credit',XP,'آجل','xpm')}${bt('xexp','','⬇ تصدير Excel')}</div>`+
+ `<div class="k"><div><b>${R.length}</b>أوردر خارجي</div><div class="w"><b>${R.filter(r=>r.s=='new').length}</b>لم يخرج بعد</div><div><b>${R.filter(r=>r.s=='out').length}</b>خرج للصيانة</div><div><b>${D.length}</b>عاد</div></div>`+
+ `<div class="k"><div><b>${money(tot)}</b>إجمالي التكلفة</div><div><b>${money(cash)}</b>مدفوع نقدًا</div><div class="w"><b>${money(cr)}</b>آجل مستحق</div></div>`+
+ `<h4 style="margin:14px 0 6px">الأذونات الخارجية بالتكلفة</h4><div class="sc"><table><tr><th>الأوردر<th>التاريخ<th>الجهة<th>الأصول<th>الحالة<th>التكلفة<th>الدفع</tr>${R.map(r=>`<tr><td>${esc(r.x.no)}<td>${fmt(r.t)}<td>${esc((r.d&&r.d.vendor)||r.x.o.dest)||'—'}<td>${r.x.items.length}<td>${stLbl(r.s)}<td>${r.d?money(r.d.cost):'—'}<td>${payTx(r.d)}</tr>`).join('')||'<tr><td colspan="7">لا توجد أوردرات</tr>'}</table></div>`+
+ `<h4 style="margin:14px 0 6px">قيود اليومية</h4><div class="sc"><table><tr><th>القيد<th>التاريخ<th>الحساب<th>مدين<th>دائن<th>البيان</tr>${JE.map(r=>{const c=money(r.d.cost);return`<tr><td rowspan="2" dir="ltr" style="white-space:nowrap">JE-${esc(r.x.no)}<td rowspan="2">${fmt(r.d.backAt)}<td>مصروف صيانة خارجية<td>${c}<td><td rowspan="2">${jeBayH(r)}</tr><tr><td>${esc(jeCr(r.d))}<td><td>${c}</tr>`}).join('')||'<tr><td colspan="6">لا توجد قيود</tr>'}<tr class="tt"><th colspan="3">الإجمالي<th>${money(jt)}<th>${money(jt)}<th></tr></table></div>`+
+ (Object.keys(V).length?`<h4 style="margin:14px 0 6px">مستحقات الموردين (آجل)</h4><div class="sc"><table><tr><th>المورد<th>المستحق<th></tr>${Object.keys(V).map(k=>`<tr><td>${esc(k)}<td>${money(V[k])}<td class="ac">${bt('sv',esc(vk(k)),'كشف الحساب')}</tr>`).join('')}</table></div>`:'')
+}
+async function xExport(){
+ if(typeof XLSX=='undefined')return note('مكتبة Excel غير محمّلة');
+ const R=xRows(),D=R.filter(r=>r.d&&+r.d.cost>0),SL={back:'عاد',out:'خرج للصيانة','new':'لم يخرج بعد'},dd=t=>t?new Date(t).toLocaleDateString('en-GB'):'';
+ const s1=[['رقم الأوردر','التاريخ','الجهة','عدد الأصول','الحالة','التكلفة','طريقة الدفع']].concat(R.map(r=>[r.x.no,dd(r.t),(r.d&&r.d.vendor)||r.x.o.dest||'',r.x.items.length,SL[r.s],r.d?+r.d.cost:'',r.d?payTx(r.d):'']));
+ const s2=[['رقم القيد','التاريخ','الحساب','مدين','دائن','البيان']];D.forEach(r=>{s2.push(['JE-'+r.x.no,dd(r.d.backAt),'مصروف صيانة خارجية',+r.d.cost,'',jeBay(r)]);s2.push(['JE-'+r.x.no,dd(r.d.backAt),jeCr(r.d),'',+r.d.cost,jeBay(r)])});
+ const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(s1),'الأذونات الخارجية');XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(s2),'قيود اليومية');
+ return xlsxSave(wb,'external-orders.xlsx')
+}
+const purLine=no=>{const x=findOut(no);if(!x)return'';const s=outSt(x),d=outDone(x),p=(x.items.find(i=>i.r.pur&&i.r.pur.outAt)||{r:{}}).r.pur||{};
+ return`<p class="s">المشتريات: ${stLbl(s)}${p.outAt?' · خرج '+fmt(p.outAt)+(p.outBy?' بواسطة '+esc(p.outBy):''):''}${d?' · عاد '+fmt(d.backAt)+' · التكلفة '+money(d.cost)+' · '+(d.pay=='cash'?'نقدًا':'آجل — '+esc(d.vendor||'')):''}</p>`};
+const purEn=no=>{const x=findOut(no),d=x&&outDone(x);return d?(+d.cost||0).toLocaleString('en-US')+' EGP — '+(d.pay=='cash'?'Paid in cash':'On credit (payable to '+(d.vendor||'vendor')+')'):'—'};
+
+// ===== حسابات الموردين (حساب العملاء) =====
+let PT='o',SV=null;
+const vk=s=>String(s||'').replace(/\s+/g,' ').trim()||'—';
+function vData(mode){
+ const M=new Map();
+ outOrders().forEach(x=>{const d=outDone(x);if(!d||!(+d.cost>0))return;
+  if(mode=='credit'&&d.pay!='credit')return;
+  const k=vk(d.vendor);let v=M.get(k);if(!v){v={name:k,rows:[],cash:0,credit:0};M.set(k,v)}
+  const c=+d.cost||0,cr=d.pay=='credit',rp=(x.items.find(i=>i.r.rep)||{r:{}}).r.rep||{};
+  v.rows.push({no:x.no,t:d.backAt||x.o.date,n:d.n||x.items.length,items:x.items,rep:rp.t||'',c,cr});
+  if(cr)v.credit+=c;else v.cash+=c});
+ M.forEach(v=>{v.rows.sort((p,q)=>String(p.t)<String(q.t)?-1:1);let b=0;v.rows.forEach(r=>{if(r.cr)b+=r.c;r.bal=b});v.total=v.cash+v.credit});
+ return[...M.values()].sort((p,q)=>q.credit-p.credit||p.name.localeCompare(q.name,'ar'))
+}
+const stmItems=r=>{const n=r.items.map(i=>i.a.name+' ('+i.a.code+')');return n.slice(0,3).join('، ')+(n.length>3?' و'+(n.length-3)+' أخرى':'')};
+const stmDesc=r=>'صيانة خارجية — '+stmItems(r)+(r.rep?' — '+r.rep:'');
+const stmDescH=r=>esc(stmItems(r))+(r.rep?`<br><small class="s">${esc(r.rep)}</small>`:'');
+const curStm=()=>vData(isPur()?'credit':'all').find(y=>y.name==vk(SV));
+const pTabs=()=>`<div class="bar">${bt('ptab','o','🔧 أوردرات الصيانة',PT=='o'?'p':'')}${bt('ptab','a','📒 حساب العملاء',PT=='a'?'p':'')}</div>`;
+function stmTable(v,P){
+ const H=['التاريخ','رقم الأوردر','البيان'].concat(P?['المبلغ (آجل)']:['طريقة الدفع','المبلغ','مدفوع نقدًا','آجل (دائن)'],['الرصيد المستحق']);
+ return`<table><tr>${H.map(h=>`<th>${h}`).join('')}</tr>${v.rows.map(r=>`<tr><td>${fmt(r.t)}<td>${esc(r.no)}<td>${stmDescH(r)}${P?`<td>${money(r.c)}`:`<td>${r.cr?'<span class="g w">آجل</span>':'<span class="g o">نقدًا</span>'}<td>${money(r.c)}<td>${r.cr?'—':money(r.c)}<td>${r.cr?money(r.c):'—'}`}<td><b>${money(r.bal)}</b></tr>`).join('')}<tr class="tt"><th colspan="${P?3:4}">الإجمالي${P?`<th>${money(v.credit)}`:`<th>${money(v.total)}<th>${money(v.cash)}<th>${money(v.credit)}`}<th>${money(v.credit)}</tr></table>`
+}
+function vStm(v,P){
+ const hd=`<div class="bar">${bt('svb','','→ كل الموردين')}<h2>${esc(SV==null?'':vk(SV))} <small class="s">· كشف حساب</small></h2>${v?bt('svp','','🖨 طباعة','p')+bt('svx','','⬇ Excel'):''}</div>`;
+ if(!v)return hd+'<div class="em">لا توجد معاملات لهذا المورد</div>';
+ return hd+`<div class="k"><div><b>${v.rows.length}</b>معاملة</div>${P?'':`<div><b>${money(v.total)}</b>إجمالي المعاملات</div><div><b>${money(v.cash)}</b>مدفوع نقدًا</div>`}<div class="w"><b>${money(v.credit)}</b>المستحق للمورد</div></div><div class="sc">${stmTable(v,P)}</div>`
+}
+function vAcc(){
+ const P=isPur(),V=vData(P?'credit':'all');
+ if(SV!=null)return vStm(V.find(y=>y.name==vk(SV)),P);
+ const tc=V.reduce((s,v)=>s+v.credit,0),tt=V.reduce((s,v)=>s+v.total,0);
+ return`<div class="k"><div><b>${V.length}</b>${P?'مورد له مستحقات':'مورد'}</div>${P?'':`<div><b>${money(tt)}</b>إجمالي المعاملات</div>`}<div class="w"><b>${money(tc)}</b>آجل مستحق</div></div>`+
+ (V.length?`<div class="sc"><table><tr><th>المورد<th>${P?'عدد المعاملات الآجلة':'عدد المعاملات'}${P?'':'<th>الإجمالي<th>مدفوع نقدًا'}<th>${P?'المستحق':'آجل مستحق'}<th></tr>${V.map(v=>`<tr><td>${esc(v.name)}<td>${v.rows.length}${P?'':`<td>${money(v.total)}<td>${money(v.cash)}`}<td><b${v.credit>0?' style="color:var(--wn)"':''}>${money(v.credit)}</b><td class="ac">${bt('sv',esc(v.name),'كشف الحساب','p')}</tr>`).join('')}</table></div>`:`<div class="em">${P?'لا توجد مبالغ آجلة مستحقة للموردين':'لا توجد معاملات موردين بعد'}</div>`)
+}
+function printStm(){
+ const P=isPur(),v=curStm();if(!v)return note('لا توجد معاملات');const p=$('#pr');
+ p.innerHTML=`<div class="np"><button class="p" data-x="doprint">🖨 طباعة</button><button data-x="clp">إغلاق</button></div><div class="pg"><div class="ph"><img src="${LOGO}" alt="SRNTY"><div><small>كشف حساب مورد</small><b>${esc(v.name)}</b></div></div><div class="pb"><div class="st"><div>التاريخ<b>${fmt(new Date())}</b></div><div>عدد المعاملات<b>${v.rows.length}</b></div>${P?'':`<div>إجمالي المعاملات<b>${money(v.total)}</b></div>`}<div>المستحق للمورد<b>${money(v.credit)}</b></div></div>${stmTable(v,P)}<div class="sg"><div>المحاسب</div><div>المراجع</div><div>المدير المالي</div></div></div><div class="ft">مجموعة فنادق سيرينتي · الإدارة المالية</div></div>`;
+ p.classList.add('on');p.scrollTop=0
+}
+function stmExport(){
+ if(typeof XLSX=='undefined')return note('مكتبة Excel غير محمّلة');
+ const P=isPur(),v=curStm();if(!v)return note('لا توجد معاملات');
+ const dd=t=>t?new Date(t).toLocaleDateString('en-GB'):'';
+ const H=P?['التاريخ','رقم الأوردر','البيان','المبلغ (آجل)','الرصيد المستحق']:['التاريخ','رقم الأوردر','البيان','طريقة الدفع','المبلغ','مدفوع نقدًا','آجل مستحق','الرصيد المستحق'];
+ const R=v.rows.map(r=>P?[dd(r.t),r.no,stmDesc(r),r.c,r.bal]:[dd(r.t),r.no,stmDesc(r),r.cr?'آجل':'نقدًا',r.c,r.cr?'':r.c,r.cr?r.c:'',r.bal]);
+ R.push(P?['','','الإجمالي',v.credit,v.credit]:['','','الإجمالي','',v.total,v.cash,v.credit,v.credit]);
+ const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([H].concat(R)),'كشف حساب');
+ return xlsxSave(wb,('كشف حساب '+v.name).replace(/[\/\\:*?"<>|]/g,' ')+'.xlsx')
+}
+
+function topbar(){const T={s:'حسابات الموردين',x:'الأذونات الخارجية والتكلفة',p:'تقارير الصيانة',g:'الفئات والأصناف',r:'الغرف',v:sel,o:'الأذونات',a:'الأصول'},v=tab=='v';return`<div class="top"><button class="bk" data-tab="${v?'r':'h'}">${IC.back}<span>${v?'الغرف':'الرئيسية'}</span></button><b>${esc(T[tab]||'')}</b></div>`}
 function vH(){
  const T=A.length,M=A.filter(a=>a.mnt).length,U=A.filter(a=>!a.mnt&&!a.room).length,no=new Set();A.forEach(a=>ordsOf(a).forEach(r=>no.add(r.no)));
  const c=(k,i,t,s,x)=>`<button class="hc" ${x?`data-x="${x}"`:`data-tab="${k}"`}><span class="ic">${i}</span><span class="tx"><b>${t}</b><small>${s}</small></span><i class="cv">${IC.chev}</i></button>`;
- return`<div class="wc"><i class="av lg">${esc([...String(cu&&cu.u||'?')][0]||'?')}</i><p class="wl">مرحبًا ${esc(cu&&cu.u||'')} — اختر القسم الذي تريده</p></div><div class="k"><div><b>${T}</b>إجمالي الأصول</div><div><b>${T-M-U}</b>موزّعة على الغرف</div><div><b>${U}</b>في المخزن</div><div class="w"><b>${M}</b>في الصيانة</div></div><div class="hm">${c('g',IC.tag,'الفئات والأصناف',allCats().length+' فئة')}${c('r',IC.door,'الغرف',allRooms().length+' غرفة')}${c('o',IC.receipt,'الأذونات',no.size+' إذن · ابحث برقم الإذن')}${cu&&cu.r=='admin'?c('p',IC.report,'تقارير الصيانة',(()=>{const n=rpNew();return n?n+' تقرير جديد · جاهز للطباعة':'تقارير الصيانة الجاهزة للطباعة'})()):''}${cu&&cu.r=='admin'?c('',IC.users,'المستخدمون','الحسابات والصلاحيات','usr'):''}</div>`
+ return`<div class="wc"><i class="av lg">${esc([...String(cu&&cu.u||'?')][0]||'?')}</i><p class="wl">مرحبًا ${esc(cu&&cu.u||'')} — اختر القسم الذي تريده</p></div><div class="k"><div><b>${T}</b>إجمالي الأصول</div><div><b>${T-M-U}</b>موزّعة على الغرف</div><div><b>${U}</b>في المخزن</div><div class="w"><b>${M}</b>في الصيانة</div></div><div class="hm">${c('g',IC.tag,'الفئات والأصناف',allCats().length+' فئة')}${c('r',IC.door,'الغرف',allRooms().length+' غرفة')}${c('o',IC.receipt,'الأذونات',no.size+' إذن · ابحث برقم الإذن')}${cu&&cu.r=='admin'?c('p',IC.report,'تقارير الصيانة',(()=>{const n=rpNew();return n?n+' تقرير جديد · جاهز للطباعة':'تقارير الصيانة الجاهزة للطباعة'})()):''}${cu&&cu.r=='admin'?c('x',IC.receipt,'الأذونات الخارجية والتكلفة',(()=>{const O=outOrders(),n=O.filter(x=>outSt(x)!='back').length;return O.length+' أوردر · '+n+' جارٍ · التكلفة وقيود اليومية'})()):''}${cu&&cu.r=='admin'?c('s',IC.report,'حسابات الموردين',(()=>{const V=vData('all'),d=V.reduce((s,v)=>s+v.credit,0);return V.length+' مورد · المستحق '+money(d)+' · كشف حساب لكل مورد'})()):''}${cu&&cu.r=='admin'?c('',IC.users,'المستخدمون','الحسابات والصلاحيات','usr'):''}</div>`
 }
 async function pool(items,fn,n,lbl){let i=0,ok=0,bad=0,err=null,last=Date.now(),lc=0;const T=items.length;
  const wd=setInterval(()=>{const d=ok+bad;if(d!=lc){lc=d;last=Date.now()}else if(Date.now()-last>15000)note('العملية بطيئة أو متوقفة ('+d+' / '+T+') — راجع الاتصال أو حدود Supabase',5000)},5000);
@@ -1192,13 +1324,13 @@ const dq=()=>{if(DT)return;DT=setTimeout(()=>{DT=0;draw()},200)};
 function draw(){
  if(!ready||(needLock()&&!un)){$('#app').innerHTML='';return}
  ensureSN();bellUpd();
- const isM=cu&&cu.r=='maintenance';
- if(isM)tab='m';
+ const isM=cu&&cu.r=='maintenance',isP=isPur();
+ if(isM)tab='m';if(isP)tab='pu';
  chkMntAlerts();chkRepAlerts();
  const T=A.length,M=A.filter(a=>a.mnt).length,U=A.filter(a=>!a.mnt&&!a.room).length,foc=document.activeElement?.id=='s';
  const rooms=allRooms(),cats=allCats();
  $('#app').innerHTML=`<datalist id="rl">${rooms.map(r=>`<option value="${esc(r)}">`).join('')}</datalist><datalist id="cl">${cats.map(r=>`<option value="${esc(r)}">`).join('')}</datalist><datalist id="wl">${WORKSHOPS.map(r=>`<option value="${esc(r)}">`).join('')}</datalist>
- ${isM?`<div class="top"><b>طلبات الصيانة</b></div>`:tab=='h'?'':topbar()}`+(isM?vM():tab=='h'?vH():tab=='a'?vA():tab=='g'?vG():tab=='r'?vR():tab=='v'?vV():tab=='p'&&cu&&cu.r=='admin'?vP():vO());
+ ${isM?`<div class="top"><b>طلبات الصيانة</b></div>`:isP?`<div class="top"><b>${PT=='a'?'المشتريات — حساب العملاء':'المشتريات — أوردرات الصيانة الخارجية'}</b></div>`:tab=='h'?'':topbar()}`+(isM?vM():isP?pTabs()+(PT=='a'?vAcc():vPur()):tab=='h'?vH():tab=='a'?vA():tab=='g'?vG():tab=='r'?vR():tab=='v'?vV():tab=='p'&&cu&&cu.r=='admin'?vP():tab=='s'&&cu&&cu.r=='admin'?vAcc():tab=='x'&&cu&&cu.r=='admin'?vX():vO());
  if(foc&&$('#s'))$('#s').focus()
 }
 function chkMntAlerts(){
@@ -1216,7 +1348,7 @@ function chkMntAlerts(){
 document.addEventListener('click',e=>{
  const st=e.target.closest('[data-st]');if(st){e.preventDefault();const i=st.parentElement.querySelector('input');i.value=Math.max(+i.min||0,(parseInt(i.value)||0)+ +st.dataset.st);i.dispatchEvent(new Event('input',{bubbles:true}));return}
  const b=e.target.closest('[data-tab],[data-x]');if(!b)return;if(b.closest('summary'))e.preventDefault();
- if(b.dataset.tab){tab=b.dataset.tab;if(tab=='h'){RS=null;RQ=''}return draw()}
+ if(b.dataset.tab){tab=b.dataset.tab;if(tab=='h'){RS=null;RQ=''}if(tab=='s')SV=null;return draw()}
  const x=b.dataset.x;if(x=='more'){LIM+=200;$('#list').innerHTML=listA();return}const a=A.find(y=>y.id==b.dataset.i);
  if(cu&&cu.r=='user'&&UDENY.has(x))return note('هذه العملية للمدير فقط');
  if(x=='bell')return bellOpen();
@@ -1307,6 +1439,7 @@ document.addEventListener('click',e=>{
  if(x=='rgo'){RS=b.dataset.i;return draw()}
  if(x=='rgb'){RS=null;return draw()}
  if(x=='repp')return printReport(b.dataset.i);
+ if(x=='pout')return purOut(b.dataset.i);if(x=='pback')return purBack(b.dataset.i);if(x=='pundo')return purUndo(b.dataset.i);if(x=='xm'){XM=b.dataset.i;return draw()}if(x=='xpm'){XP=b.dataset.i;return draw()}if(x=='xexp')return xExport();if(x=='ptab'){PT=b.dataset.i;SV=null;return draw()}if(x=='sv'){SV=b.dataset.i;if(isPur())PT='a';else tab='s';draw();return window.scrollTo(0,0)}if(x=='svb'){SV=null;return draw()}if(x=='svp')return printStm();if(x=='svx')return stmExport();
  if(x=='mfin')return fin([...document.querySelectorAll('.mk:checked')].map(e=>A.find(y=>y.id==e.value)).filter(Boolean));
  if(x=='imp')return imp();
  if(x=='assign'||x=='send'){
@@ -1325,7 +1458,7 @@ $('#lg0').src=LOGO;lockUI();draw();init();
 </script>
 <script>
 (function(){
-const D={"الرئيسية": "Home", "الغرف": "Rooms", "الأصول": "Assets", "الأذونات": "Orders", "الفئات والأصناف": "Categories & Items", "الصيانة": "Maintenance", "تقارير الصيانة": "Maintenance Reports", "المستخدمون": "Users", "خروج": "Logout", "دخول": "Login", "تسجيل الدخول": "Sign in", "اسم المستخدم": "Username", "كلمة المرور": "Password", "نسيت كلمة المرور؟": "Forgot password?", "البريد الإلكتروني": "Email", "تغيير كلمة المرور": "Change password", "إغلاق": "Close", "إلغاء": "Cancel", "تأكيد": "Confirm", "حذف": "Delete", "تعديل": "Edit", "إضافة": "Add", "حفظ": "Save", "نقل": "Move", "سجل": "History", "إنشاء الحساب": "Create account", "اسم الأصل": "Asset name", "اسم الغرفة": "Room name", "رقم الغرفة": "Room number", "الكود": "Code", "العدد": "Qty", "المجموعة": "Group", "المقاس": "Size", "الموديل": "Model", "الحالة": "Status", "الفئة": "Category", "ملاحظات": "Notes", "التاريخ": "Date", "الإجمالي": "Total", "إجمالي الأصول": "Total assets", "إجمالي القطع": "Total pieces", "في الصيانة": "In maintenance", "في المخزن": "In store", "المخزن": "Store", "أصل": "Asset", "صنف": "Item", "غرفة": "Room", "مجموعة": "Group", "بدون مجموعة": "No group", "غرفة جديدة": "New room", "غرفة موجودة": "Existing room", "أصل جديد": "New asset", "الورشة": "Workshop", "أُعيد إلى": "Returned to", "العمل المنجز": "Work done", "جديد": "New", "تعليمات": "Instructions", "مدير": "Admin", "مستخدم": "User", "صيانة": "Maintenance", "+ أصل جديد": "+ New asset", "➕ أصل جديد": "➕ New asset", "+ إضافة غرف": "+ Add rooms", "+ إضافة مجموعة": "+ Add group", "+ صنف": "+ Item", "✏️ تعديل الأصل": "✏️ Edit asset", "⬇ تصدير شيت المجموعة": "⬇ Export group sheet", "⬇ تصدير شيت الغرفة": "⬇ Export room sheet", "⬇ تصدير كل الغرف": "⬇ Export all rooms", "⬇ قائمة أرقام الغرف": "⬇ Room numbers list", "⬇ تصدير الأصول": "⬇ Export assets", "⬆ استيراد غرف من Excel": "⬆ Import rooms from Excel", "استيراد من Excel": "Import from Excel", "رفع شيت الغرف": "Upload rooms sheet", "⬇ نموذج غرفة": "⬇ Room template", "إرسال المحدد للصيانة": "Send selected to maintenance", "إنهاء الصيانة": "Finish maintenance", "🖨 طباعة الإذن": "🖨 Print order", "🖨 طباعة التقرير": "🖨 Print report", "🖨 طباعة تقرير الصيانة": "🖨 Print maintenance report", "🖨 طباعة": "🖨 Print", "تمييز الكل كمقروء": "Mark all as read", "→ كل الغرف": "→ All rooms", "→ المجموعات": "→ Groups", "🗑 حذف الغرفة": "🗑 Delete room", "حذف الغرفة": "Delete room", "حذف الأصل": "Delete asset", "حذف الصنف": "Delete item", "حذف المحدد": "Delete selected", "حذف الكل": "Delete all", "إرجاع المحدد للمخزن": "Return selected to store", "مسح الأعداد": "Clear counts", "دخول الغرفة": "Open room", "دخول المجموعة": "Open group", "إضافة للغرفة": "Add to room", "أرقام الغرف": "Room numbers", "أسماء الغرف": "Room names", "عدد الأصول": "Asset count", "عدد الأصناف": "Item count", "غرف سيرينتي": "Serenity rooms", "أصول سيرينتي": "Serenity assets", "الغرف المسجلة": "Registered rooms", "طلبات الصيانة": "Maintenance requests", "طلب صيانة جديد": "New maintenance request", "تقرير صيانة جديد": "New maintenance report", "تقرير الصيانة": "Maintenance report", "إذن رقم": "Order no.", "رقم الإذن": "Order no.", "رقم الأصل": "Asset no.", "نوع الصيانة": "Maintenance type", "داخل الفندق": "Inside the hotel", "OUT GOING — إصلاح خارج الفندق": "OUT GOING — repair outside the hotel", "سبب الصيانة / العطل": "Maintenance reason / fault", "المكان المنقول إليه": "Moved to", "اسم مستلم الإذن": "Order receiver name", "إرسال للصيانة — إذن جديد": "Send to maintenance — new order", "اسم مجموعة الغرف": "Room group name", "لا توجد نتائج": "No results", "لا توجد أصول": "No assets", "الغرفة فارغة": "The room is empty", "جارٍ التحميل…": "Loading…", "جارٍ التطبيق…": "Applying…", "لا توجد طلبات صيانة حاليًا": "No maintenance requests right now", "لا توجد تقارير صيانة بعد": "No maintenance reports yet", "لا توجد أصول بعد. ابدأ بإضافة أول أصل.": "No assets yet. Start by adding the first asset.", "ابدأ بإضافة مجموعة، ثم ادخلها وأضف غرفها": "Start by adding a group, then open it and add its rooms", "تعذّر الحفظ": "Save failed", "تعذّر الحذف": "Delete failed", "تم تطبيق الشيت": "Sheet applied", "تمت الإضافة:": "Added:", "تقارير الصيانة الجاهزة للطباعة": "Maintenance reports ready to print", "اسم المستخدم أو كلمة المرور غير صحيحة": "Wrong username or password", "مرحبًا": "Welcome", "اختر الأصل": "Select asset", "اختر الصنف": "Select item", "اختر…": "Select…", "اختياري": "Optional", "بحث بالكود أو الاسم أو الغرفة": "Search by code, name or room", "🔍 ابحث عن غرفة بالاسم أو الرقم": "🔍 Find a room by name or number", "اكتب رقم الإذن للبحث": "Type the order number to search", "الحسابات والصلاحيات": "Accounts & permissions", "إدارة الأصول الثابتة لمجموعة فنادق سيرينتي": "Fixed asset management — Serenity Hotels Group", "مجموعة فنادق سيرينتي · إدارة الأصول الثابتة": "Serenity Hotels Group · Fixed asset management", "عدد الصفحات الفاضية للإضافة": "Number of blank pages to add", "صفحة فاضية": "Blank page", "أوراق تم تجاهلها:": "Ignored sheets:", "كلمة المرور الحالية": "Current password", "كلمة مرور جديدة": "New password", "تأكيد كلمة المرور": "Confirm password", "تأكيد الحذف": "Confirm delete", "هل تريد": "Do you want"};
+const D={"حسابات الموردين": "Supplier Accounts", "حساب العملاء": "Vendor Accounts", "كشف الحساب": "Statement", "كشف حساب": "Account Statement", "كل الموردين": "All vendors", "الرصيد المستحق": "Balance due", "المستحق للمورد": "Due to vendor", "إجمالي المعاملات": "Total transactions", "أوردرات الصيانة": "Maintenance orders", "الرئيسية": "Home", "الغرف": "Rooms", "الأصول": "Assets", "الأذونات": "Orders", "الفئات والأصناف": "Categories & Items", "الصيانة": "Maintenance", "تقارير الصيانة": "Maintenance Reports", "المستخدمون": "Users", "خروج": "Logout", "دخول": "Login", "تسجيل الدخول": "Sign in", "اسم المستخدم": "Username", "كلمة المرور": "Password", "نسيت كلمة المرور؟": "Forgot password?", "البريد الإلكتروني": "Email", "تغيير كلمة المرور": "Change password", "إغلاق": "Close", "إلغاء": "Cancel", "تأكيد": "Confirm", "حذف": "Delete", "تعديل": "Edit", "إضافة": "Add", "حفظ": "Save", "نقل": "Move", "سجل": "History", "إنشاء الحساب": "Create account", "اسم الأصل": "Asset name", "اسم الغرفة": "Room name", "رقم الغرفة": "Room number", "الكود": "Code", "العدد": "Qty", "المجموعة": "Group", "المقاس": "Size", "الموديل": "Model", "الحالة": "Status", "الفئة": "Category", "ملاحظات": "Notes", "التاريخ": "Date", "الإجمالي": "Total", "إجمالي الأصول": "Total assets", "إجمالي القطع": "Total pieces", "في الصيانة": "In maintenance", "في المخزن": "In store", "المخزن": "Store", "أصل": "Asset", "صنف": "Item", "غرفة": "Room", "مجموعة": "Group", "بدون مجموعة": "No group", "غرفة جديدة": "New room", "غرفة موجودة": "Existing room", "أصل جديد": "New asset", "الورشة": "Workshop", "أُعيد إلى": "Returned to", "العمل المنجز": "Work done", "جديد": "New", "تعليمات": "Instructions", "مدير": "Admin", "مستخدم": "User", "صيانة": "Maintenance", "+ أصل جديد": "+ New asset", "➕ أصل جديد": "➕ New asset", "+ إضافة غرف": "+ Add rooms", "+ إضافة مجموعة": "+ Add group", "+ صنف": "+ Item", "✏️ تعديل الأصل": "✏️ Edit asset", "⬇ تصدير شيت المجموعة": "⬇ Export group sheet", "⬇ تصدير شيت الغرفة": "⬇ Export room sheet", "⬇ تصدير كل الغرف": "⬇ Export all rooms", "⬇ قائمة أرقام الغرف": "⬇ Room numbers list", "⬇ تصدير الأصول": "⬇ Export assets", "⬆ استيراد غرف من Excel": "⬆ Import rooms from Excel", "استيراد من Excel": "Import from Excel", "رفع شيت الغرف": "Upload rooms sheet", "⬇ نموذج غرفة": "⬇ Room template", "إرسال المحدد للصيانة": "Send selected to maintenance", "إنهاء الصيانة": "Finish maintenance", "🖨 طباعة الإذن": "🖨 Print order", "🖨 طباعة التقرير": "🖨 Print report", "🖨 طباعة تقرير الصيانة": "🖨 Print maintenance report", "🖨 طباعة": "🖨 Print", "تمييز الكل كمقروء": "Mark all as read", "→ كل الغرف": "→ All rooms", "→ المجموعات": "→ Groups", "🗑 حذف الغرفة": "🗑 Delete room", "حذف الغرفة": "Delete room", "حذف الأصل": "Delete asset", "حذف الصنف": "Delete item", "حذف المحدد": "Delete selected", "حذف الكل": "Delete all", "إرجاع المحدد للمخزن": "Return selected to store", "مسح الأعداد": "Clear counts", "دخول الغرفة": "Open room", "دخول المجموعة": "Open group", "إضافة للغرفة": "Add to room", "أرقام الغرف": "Room numbers", "أسماء الغرف": "Room names", "عدد الأصول": "Asset count", "عدد الأصناف": "Item count", "غرف سيرينتي": "Serenity rooms", "أصول سيرينتي": "Serenity assets", "الغرف المسجلة": "Registered rooms", "طلبات الصيانة": "Maintenance requests", "طلب صيانة جديد": "New maintenance request", "تقرير صيانة جديد": "New maintenance report", "تقرير الصيانة": "Maintenance report", "إذن رقم": "Order no.", "رقم الإذن": "Order no.", "رقم الأصل": "Asset no.", "نوع الصيانة": "Maintenance type", "داخل الفندق": "Inside the hotel", "OUT GOING — إصلاح خارج الفندق": "OUT GOING — repair outside the hotel", "سبب الصيانة / العطل": "Maintenance reason / fault", "المكان المنقول إليه": "Moved to", "اسم مستلم الإذن": "Order receiver name", "إرسال للصيانة — إذن جديد": "Send to maintenance — new order", "اسم مجموعة الغرف": "Room group name", "لا توجد نتائج": "No results", "لا توجد أصول": "No assets", "الغرفة فارغة": "The room is empty", "جارٍ التحميل…": "Loading…", "جارٍ التطبيق…": "Applying…", "لا توجد طلبات صيانة حاليًا": "No maintenance requests right now", "لا توجد تقارير صيانة بعد": "No maintenance reports yet", "لا توجد أصول بعد. ابدأ بإضافة أول أصل.": "No assets yet. Start by adding the first asset.", "ابدأ بإضافة مجموعة، ثم ادخلها وأضف غرفها": "Start by adding a group, then open it and add its rooms", "تعذّر الحفظ": "Save failed", "تعذّر الحذف": "Delete failed", "تم تطبيق الشيت": "Sheet applied", "تمت الإضافة:": "Added:", "تقارير الصيانة الجاهزة للطباعة": "Maintenance reports ready to print", "اسم المستخدم أو كلمة المرور غير صحيحة": "Wrong username or password", "مرحبًا": "Welcome", "اختر الأصل": "Select asset", "اختر الصنف": "Select item", "اختر…": "Select…", "اختياري": "Optional", "بحث بالكود أو الاسم أو الغرفة": "Search by code, name or room", "🔍 ابحث عن غرفة بالاسم أو الرقم": "🔍 Find a room by name or number", "اكتب رقم الإذن للبحث": "Type the order number to search", "الحسابات والصلاحيات": "Accounts & permissions", "إدارة الأصول الثابتة لمجموعة فنادق سيرينتي": "Fixed asset management — Serenity Hotels Group", "مجموعة فنادق سيرينتي · إدارة الأصول الثابتة": "Serenity Hotels Group · Fixed asset management", "عدد الصفحات الفاضية للإضافة": "Number of blank pages to add", "صفحة فاضية": "Blank page", "أوراق تم تجاهلها:": "Ignored sheets:", "كلمة المرور الحالية": "Current password", "كلمة مرور جديدة": "New password", "تأكيد كلمة المرور": "Confirm password", "تأكيد الحذف": "Confirm delete", "هل تريد": "Do you want", "الأذونات الخارجية والتكلفة": "External orders & cost", "الأذونات الخارجية بالتكلفة": "External orders with cost", "قيود اليومية": "Journal entries", "المشتريات": "Purchasing", "أوردرات الصيانة الخارجية": "External maintenance orders", "تأكيد خروج الأوردر": "Confirm order left", "تأكيد الرجوع وإدخال التكلفة": "Confirm return & enter cost", "لم يخرج بعد": "Not left yet", "خرج للصيانة": "Out for maintenance", "الغرفة الأصلية": "Original room", "إجمالي التكلفة": "Total cost", "مدفوع نقدًا": "Paid in cash", "آجل مستحق": "Payable on credit", "مستحقات الموردين": "Vendor payables", "مصروف صيانة خارجية": "External maintenance expense", "الصندوق / النقدية": "Cash", "مدين": "Debit", "دائن": "Credit", "كل الفترات": "All periods", "هذا الشهر": "This month", "الشهر الماضي": "Last month", "كل طرق الدفع": "All payment methods", "نقدًا": "Cash", "آجل": "On credit", "⬇ تصدير Excel": "⬇ Export Excel", "أوردر خارجي": "External order"};
 const P=Object.keys(D).filter(k=>k.length>=6).sort((a,b)=>b.length-a.length),RE=new RegExp(P.map(k=>k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|'),'g'),AR=/[\u0600-\u06FF]/,orig=new Map(),AT=['placeholder','title','aria-label'];
 const st=(k,v)=>{try{v==null?localStorage.getItem(k):localStorage.setItem(k,v)}catch(e){}},gt=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
 let lang=gt('lang')||'ar';const R=document.documentElement;
@@ -1364,7 +1497,7 @@ setInterval(()=>{if(!on())armed=false;else if(!armed)arm()},3000);
   function sync(){
    let t,role,ok;
    try{t=tab;role=cu&&cu.r;ok=!!(cu&&un)}catch(e){return}
-   const show=ok&&role!='maintenance';
+   const show=ok&&role!='maintenance'&&role!='purchasing';
    mn.hidden=!show;
    document.body.classList.toggle('has-nav',show);
    const cur=t=='v'?'r':t;
