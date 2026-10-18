@@ -117,7 +117,7 @@ dialog .bt{position:sticky;bottom:0;margin-top:12px}dialog .bt button{flex:1;pad
   --p:#0a7ea4;--ok:#0f8a63;--wn:#b7791f;--bd:#d03050;--ac:#f0a93b;
   --tint:color-mix(in srgb,var(--p) 10%,var(--c));
   --sh:0 1px 2px rgba(14,26,36,.04),0 4px 14px rgba(14,26,36,.06);
-  --gut:max(16px,calc((100vw - 1180px)/2));
+  --gut:max(16px,calc((100vw - 1600px)/2));
   padding-top:0;padding-bottom:0
 }
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a1117;--c:#121b24;--t:#e7eef4;--m:#8da0b0;--b:#223241;--p:#3cb9e6;--ok:#4cc9a0;--wn:#f2b04c;--bd:#ff7b8c;--sh:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25)}}
@@ -353,7 +353,7 @@ button.p,dialog .bt button.p{background:linear-gradient(180deg,var(--bl1),var(--
   #mn button .si{display:none}
   #mn button:hover{background:var(--tint)}
   #mn button.on{background:transparent;color:var(--bl2);border-bottom:3px solid var(--bl1);font-weight:700}
-  body.has-nav #app{margin-inline:auto;max-width:1180px;width:calc(100% - 2*var(--gut));padding-top:46px}
+  body.has-nav #app{margin-inline:auto;max-width:1600px;width:calc(100% - 2*var(--gut));padding-top:46px}
 }
 .ht h1{margin:6px 0 2px;font-size:30px;font-weight:600;color:var(--t)}
 .ht .wl{margin:0 0 6px}
@@ -386,7 +386,7 @@ button.p.add{background:linear-gradient(180deg,#34c08f,#1f9f72);border-color:#1f
   .hch span::before{content:"🏨";font-size:19px}
 }
 
-.hm{grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr))}
+.hm{grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr))}
 .hc{min-width:0;max-width:100%}
 .hc small,.hc b{white-space:normal;overflow-wrap:anywhere}
 
@@ -574,7 +574,7 @@ window.HOTELS = [
   const roErr = () => { try { window.note && window.note('وضع العرض فقط (كل الفنادق): اختر فندقًا للتعديل', 5000); } catch (e) {} const o = new Error('read-only'); o.code = 'permission-denied'; return o; };
   // وضع المعاينة (للقراءة فقط): يمنع أي كتابة ثم يعيد تحميل البيانات لإلغاء أي تعديل ظاهري
   const roV = () => {
-    if (!window.VIEWAS) return;
+    if (!window.VIEWAS || window.VIEWAS.edit) return;
     try { window.note && window.note('وضع المعاينة: للعرض فقط — لا يمكن تنفيذ هذه العملية', 4000); } catch (e) {}
     clearTimeout(roV.t); roV.t = setTimeout(() => { try { stopData(); startData(); draw(); } catch (e) {} }, 500);
     const o = new Error('read-only'); o.code = 'permission-denied'; throw o;
@@ -750,7 +750,10 @@ let CTR={code:0,ord:0,og:0,tr:0,dc:0};
 function bumpCtr(p){let ch=0;for(const k in p)if(p[k]>CTR[k]){CTR[k]=p[k];ch=1}
  if(ch&&window.FBC&&!window.FB_OFF)try{Promise.resolve(FBC('meta').doc('counters').set({code:CTR.code,ord:CTR.ord,og:CTR.og,tr:CTR.tr,dc:CTR.dc})).catch(()=>{})}catch(e){}}
 let NF=null,NSEEN=new Set(),ncol=null;
-const UDENY=new Set(['ra','rinc','rdec','rall','del','bkdel','unas','bkst','new','addr','assign','rimp','imp','addg','gadd','gren','gdel','addc','cadd','iren','idel','cren','cdel','addrooms','newr','wipe']);
+const UDENY_RO=new Set(['ra','rinc','rdec','rall','del','bkdel','unas','bkst','new','addr','assign','rimp','imp','addg','gadd','gren','gdel','addc','cadd','iren','idel','cren','cdel','addrooms','newr','wipe']);
+const UDENY=new Set(['rimp','imp','addg','gadd','gren','gdel','addc','cadd','iren','idel','cren','cdel','wipe']);
+function isU(){return !!(cu&&cu.r=='user'&&!(window.VIEWAS&&window.VIEWAS.edit))}
+
 const NFm=()=>(NF||[]).filter(n=>n.to==(cu&&cu.u)||(n.to=='admin'&&cu&&cu.r=='admin')||(n.to=='purchasing'&&cu&&cu.r=='purchasing')||(n.to=='maintenance'&&cu&&cu.r=='maintenance')).sort((x,y)=>x.at<y.at?1:-1);
 function bellUpd(){const e=$('#bellb');if(!e)return;const n=NFm().filter(x=>!x.read).length;e.innerHTML='🔔'+(n?`<span class="bdg">${n>99?'99+':n}</span>`:'')}
 async function sendNotif(o){if(!ncol)throw 0;const id='n'+Date.now()+Math.random().toString(36).slice(2,6);return ncol.doc(id).set({...o,at:new Date().toISOString(),read:false})}
@@ -823,12 +826,12 @@ function startData(){
 }
 let HSEL='';
 const hName=()=>{const v=window.HOTEL_SEL;if(v=='*')return 'كل الفنادق · عرض فقط';const h=(window.HOTELS||[]).find(y=>y.id==v);return h?h.name:v};
-const VA_ROLES=new Set(['admin']);   // من يحق له المعاينة (للقراءة فقط)
-function vaRender(){const d=$('#d'),me=window.VIEWAS?window.VIEWAS.real.uid:(cu&&cu.uid);d.innerHTML=`<div><h3>معاينة كمستخدم</h3><p class="s">اختر مستخدمًا لتتصفح النظام كما يراه. العرض للقراءة فقط: لن تستطيع تنفيذ أي مهمة نيابةً عنه.</p><ul class="h" style="max-height:50vh;padding:0;list-style:none">${[...US].filter(x=>x.uid!=me).sort((x,y)=>nat(x.u,y.u)).map(x=>`<li style="display:flex;gap:6px;align-items:center;border-bottom:1px solid var(--b);padding:8px 0"><b>${esc(x.u)}</b><span class="g${x.r=='admin'?' o':''}">${esc(roleLbl(x))}</span><span style="margin-inline-start:auto">${bt('vago',esc(x.uid),'معاينة','p')}</span></li>`).join('')||'<li class="s">لا يوجد مستخدمون آخرون</li>'}</ul><div class="bt"><button type="button" data-x="uclose">إغلاق</button></div></div>`}
+const VA_ROLES=new Set(['admin','user']);   // من يحق له المعاينة (للقراءة فقط)
+function vaRender(){const d=$('#d'),me=window.VIEWAS?window.VIEWAS.real.uid:(cu&&cu.uid);d.innerHTML=`<div><h3>معاينة كمستخدم</h3><p class="s">اختر مستخدمًا لتتصفح النظام كما يراه. ${((window.VIEWAS?window.VIEWAS.real:cu).r=='admin')?'بصلاحية المدير يمكنك التعديل على كل شيء داخل حسابه.':'العرض للقراءة فقط: لن تستطيع تنفيذ أي مهمة نيابةً عنه.'}</p><ul class="h" style="max-height:50vh;padding:0;list-style:none">${[...US].filter(x=>x.uid!=me&&(((window.VIEWAS?window.VIEWAS.real:cu).r=='admin')||x.r!='admin')).sort((x,y)=>nat(x.u,y.u)).map(x=>`<li style="display:flex;gap:6px;align-items:center;border-bottom:1px solid var(--b);padding:8px 0"><b>${esc(x.u)}</b><span class="g${x.r=='admin'?' o':''}">${esc(roleLbl(x))}</span><span style="margin-inline-start:auto">${bt('vago',esc(x.uid),'معاينة','p')}</span></li>`).join('')||'<li class="s">لا يوجد مستخدمون آخرون</li>'}</ul><div class="bt"><button type="button" data-x="uclose">إغلاق</button></div></div>`}
 function vaOpen(){const real=window.VIEWAS?window.VIEWAS.real:cu;if(!real||!VA_ROLES.has(real.r))return;const d=$('#d');d.style.width='';d.onkeydown=null;d.dataset.k='vas';d.onclose=()=>{d.dataset.k='';d.returnValue=''};vaRender();d.showModal()}
-function vaStart(t){const real=window.VIEWAS?window.VIEWAS.real:cu;if(!real||!VA_ROLES.has(real.r))return;window.VIEWAS={real};cu={u:t.u,r:t.r,uid:t.uid,workshop:t.workshop||''};tab='h';try{$('#d').close()}catch(e){}vaBar();lockUI();draw()}
+function vaStart(t){const real=window.VIEWAS?window.VIEWAS.real:cu;if(!real||!VA_ROLES.has(real.r))return;if(real.r!='admin'&&t.r=='admin')return;window.VIEWAS={real,edit:real.r=='admin'};cu={u:t.u,r:t.r,uid:t.uid,workshop:t.workshop||''};tab='h';try{$('#d').close()}catch(e){}vaBar();lockUI();draw()}
 function vaExit(){if(!window.VIEWAS)return;cu=window.VIEWAS.real;window.VIEWAS=null;tab='h';vaBar();lockUI();draw()}
-function vaBar(){document.body.classList.toggle('va',!!window.VIEWAS);let e=document.getElementById('vab');if(!window.VIEWAS){if(e)e.remove();return}if(!e){e=document.createElement('div');e.id='vab';document.body.appendChild(e)}e.innerHTML=`<span>👁 وضع المعاينة — تتصفح كـ <b>${esc(cu.u)}</b> (${esc(roleLbl(cu))}) · للعرض فقط</span><button data-x="vax">إنهاء المعاينة</button>`}
+function vaBar(){document.body.classList.toggle('va',!!window.VIEWAS);let e=document.getElementById('vab');if(!window.VIEWAS){if(e)e.remove();return}if(!e){e=document.createElement('div');e.id='vab';document.body.appendChild(e)}e.innerHTML=`<span>👁 وضع المعاينة — تتصفح كـ <b>${esc(cu.u)}</b> (${esc(roleLbl(cu))}) · ${window.VIEWAS.edit?'تعديل كامل بصلاحية المدير':'للعرض فقط'}</span><button data-x="vax">إنهاء المعاينة</button>`}
 function lkPanel(){return '<div class="lkb"><i class="a"></i><div class="cap">Fixed Assets Management<br>SRNTY Hotels Group</div></div>'}
 function acRows(L,cur,rm){return L.map(a=>`<div class="ac${a.uid==cur?' cur':''}"><button data-x="swgo" data-i="${esc(a.uid)}"><i>${esc([...String(a.u||'?')][0]||'?')}</i><span><b>${esc(a.u)}</b><small>${esc(a.r||'user')}${a.uid==cur?' · current':''}</small></span></button>${rm?`<button class="rm" data-x="swrm" data-i="${esc(a.uid)}" title="Remove">✕</button>`:''}</div>`).join('')}
 function hotelUI(k){
@@ -859,7 +862,7 @@ function lockUI(){
  if(window.SWU){hb.innerHTML='';userUI(k);return}
  if(!window.HOTEL_SEL){hb.innerHTML='';if(k.dataset.m!='h'||k.hidden)hotelUI(k);return}
  k.hidden=true;k.dataset.m='';k.classList.remove('sp');
- hb.innerHTML=(window.HOTEL_SEL?`<button data-x="chh" class="hch" title="اختيار الفندق"><span>🏨 ${esc(hName())}</span><small>${new Date().toLocaleDateString('en-CA')}</small></button>`:'')+'<button data-x="bell" id="bellb" title="الإشعارات">🔔</button>'+`<details class="mm"><summary><i class="av">${esc([...String(cu.u||'?')][0]||'?')}</i><span class="un">${esc(cu.u)}</span>${IC.down}</summary><div class="menu">`+(cu.r=='admin'?'<button data-x="usr">المستخدمون</button>':'')+'<button data-x="chh">اختيار الفندق</button><button data-x="swu">تبديل المستخدم</button>'+(window.VIEWAS?'<button data-x="vax">إنهاء المعاينة</button>':(cu.r=='admin'?'<button data-x="vas">معاينة كمستخدم</button>':''))+'<button data-x="lkc">كلمة المرور</button><button data-x="lke">البريد الإلكتروني</button><button data-x="lkn" class="r">خروج</button></div></details>'
+ hb.innerHTML=(window.HOTEL_SEL?`<button data-x="chh" class="hch" title="اختيار الفندق"><span>🏨 ${esc(hName())}</span><small>${new Date().toLocaleDateString('en-CA')}</small></button>`:'')+'<button data-x="bell" id="bellb" title="الإشعارات">🔔</button>'+`<details class="mm"><summary><i class="av">${esc([...String(cu.u||'?')][0]||'?')}</i><span class="un">${esc(cu.u)}</span>${IC.down}</summary><div class="menu">`+(cu.r=='admin'?'<button data-x="usr">المستخدمون</button>':'')+'<button data-x="chh">اختيار الفندق</button><button data-x="swu">تبديل المستخدم</button>'+(window.VIEWAS?'<button data-x="vax">إنهاء المعاينة</button>':(VA_ROLES.has(cu.r)?'<button data-x="vas">معاينة كمستخدم</button>':''))+'<button data-x="lkc">كلمة المرور</button><button data-x="lke">البريد الإلكتروني</button><button data-x="lkn" class="r">خروج</button></div></details>'
 }
 async function tryUnlock(){
  if(setupNeeded)return doSetup();
@@ -1422,7 +1425,7 @@ function listA(){
  if(!L.length)return`<div class="em">${A.length?'لا توجد نتائج':'لا توجد أصول بعد. ابدأ بإضافة أول أصل.'}</div>`;
  return`<div class="sc"><table><tr><th>الكود<th>الأصل<th>الفئة<th>الحالة / الموقع<th></tr>`+L.slice(0,LIM).map(a=>`<tr><td>${esc(a.code)}${partTag(a)}<td>${esc(a.name)}<td>${esc(a.cat)}<td>${a.mnt?'<span class="g w">في الصيانة</span>':a.room?`<span class="g o">${esc(a.room)}</span>`:'<span class="g">المخزن</span>'}<td class="ac">${a.mnt?'':bt('move',a.id,'نقل')}${a.mnt?'':bt('part',a.id,'جزء من الأصل')}${partBtn(a)}${bt('log',a.id,'سجل')+decBtn(a)}${bt('edit',a.id,'تعديل')}${bt('del',a.id,'حذف','r')}</tr>`).join('')+`</table></div>`+(L.length>LIM?`<div class="em">يُعرض ${LIM} من ${L.length} أصل · <button data-x="more">عرض المزيد</button> أو استخدم البحث</div>`:'')
 }
-const vA=()=>`<div class="bar"><input id="s" placeholder="بحث بالكود أو الاسم أو الغرفة" value="${esc(q)}"><button data-x="tm">⬇ نموذج شيت عام</button><button data-x="ex">⬇ تصدير الأصول</button>${cu&&cu.r=='user'?'':'<button data-x="imp">استيراد شيت عام</button><button class="p" data-x="new">+ أصل جديد</button>'}</div><div id="list">${listA()}</div>`;
+const vA=()=>`<div class="bar"><input id="s" placeholder="بحث بالكود أو الاسم أو الغرفة" value="${esc(q)}"><button data-x="tm">⬇ نموذج شيت عام</button><button data-x="ex">⬇ تصدير الأصول</button>${isU()?'':'<button data-x="imp">استيراد شيت عام</button>'}<button class=\"p\" data-x=\"new\">+ أصل جديد</button></div><div id="list">${listA()}</div>`;
 const opts=ex=>A.filter(a=>!a.mnt&&a.room!=ex).sort((x,y)=>nat(x.code,y.code)).map(a=>`<option value="${a.id}">${esc(a.code)} – ${esc(a.name)}${a.room?' ('+esc(a.room)+')':''}</option>`).join('')||'<option value="">لا توجد أصول</option>';
 function vR(){return`<div class="bar"><input id="rq" placeholder="ابحث عن غرفة بالاسم أو الرقم" value="${esc(RQ)}"></div><div id="rbody">${rbody()}</div>`}
 function rbody(){
@@ -1442,14 +1445,14 @@ const sm=L=>{const g=grp(L);return`<p class="s" style="margin:0 0 10px"><b>ال�
 function vV(){
  const r=sel,L=A.filter(a=>!a.mnt&&a.room==r).sort((x,y)=>nat(x.code,y.code)),M=A.filter(a=>a.mnt&&a.from==r),G=rgrp(r),IA=itemsAll(),og={};
  IA.forEach((x,i)=>(og[x.g]=og[x.g]||[]).push(`<option value="${i}">${esc(x.n)}</option>`));
- return`<div class="bar"><button data-x="bk">→ كل الغرف</button><h2>${esc(r)} <small class="s">${SNM[r]?'· رقم '+SNM[r]+' ':''}${RG[r]?'· '+esc(RG[r])+' ':''}(${L.length} أصل)</small></h2><button data-x="print">🖨 طباعة</button><button data-x="xl">⬇ تصدير شيت الغرفة</button><button class="r" data-x="delroom">${cu&&cu.r=='user'?'🗑 طلب حذف الغرفة':'🗑 حذف الغرفة'}</button></div>`+
+ return`<div class="bar"><button data-x="bk">→ كل الغرف</button><h2>${esc(r)} <small class="s">${SNM[r]?'· رقم '+SNM[r]+' ':''}${RG[r]?'· '+esc(RG[r])+' ':''}(${L.length} أصل)</small></h2><button data-x="print">🖨 طباعة</button><button data-x="xl">⬇ تصدير شيت الغرفة</button><button class="r" data-x="delroom">🗑 حذف الغرفة</button></div>`+
  `<div class="bar"><label class="s" style="align-self:center">المجموعة:</label><select id="rg" style="flex:1"><option value="">بدون مجموعة</option>${allGroups().map(g=>`<option value="${esc(g)}"${RG[r]==g?' selected':''}>${esc(g)}</option>`).join('')}</select></div>`+
- (cu&&cu.r=='user'?'':`<div class="addc"><h4>➕ إضافة أصناف للغرفة</h4><div class="bar"><select id="ci" style="flex:2">${IA.length?Object.keys(og).map(g=>`<optgroup label="${esc(g||'بدون فئة')}">${og[g].join('')}</optgroup>`).join(''):'<option value="">أضف أصنافًا من تبويب «الفئات والأصناف» أولًا</option>'}</select><div class="stp"><button type="button" data-st="-1">−</button><input id="cq" inputmode="numeric" value="1"><button type="button" data-st="1">+</button></div><button class="p" data-x="ra">إضافة للغرفة</button></div></div>`)+
- (G.length?`<div class="sc"><table><tr><th>الصنف<th>المجموعة<th>العدد<th></tr>${G.map((x,i)=>`<tr><td>${esc(x.name)}${smx(x)}<td>${esc(x.cat)||'—'}<td><b>${x.list.length}</b><td class="ac">${cu&&cu.r=='user'?'':bt('rinc',i,'+ زيادة','p')+bt('rdec',i,'− إنقاص')+bt('rall',i,'حذف الكل','r')}</tr>`).join('')}<tr><td colspan="2"><b>الإجمالي</b><td><b>${L.length}</b><td></tr></table></div>`:'<div class="em">الغرفة فارغة. اختر صنفًا وحدد العدد من الأعلى.</div>')+
- (L.length?`<details class="rm" style="margin-top:12px" data-c="__room"${OPEN.has('__room')?' open':''}><summary>عرض الأصول بالتفصيل (كود لكل قطعة)</summary><div class="bd"><div class="bar"><button class="p" data-x="bktr">نقل المحدد (Transfer)</button><button class="p" data-x="bksend">إرسال المحدد للصيانة</button>${cu&&cu.r=='admin'?'<button class="r" data-x="bkdc">تكهين المحدد</button>':''}${cu&&cu.r=='user'?'':'<button class="r" data-x="bkdel">حذف المحدد</button><button data-x="bkst">إرجاع المحدد للمخزن</button>'}</div><div class="sc"><table><tr><th><input type="checkbox" id="ska"><th>الكود<th>الأصل<th>الفئة<th>ملاحظات<th></tr>`+L.map(a=>`<tr><td><input type="checkbox" class="sk" value="${a.id}"><td>${esc(a.code)}${partTag(a)}<td>${esc(a.name)}<td>${esc(a.cat)}<td>${esc(a.note)}<td class="ac">${bt('move',a.id,'نقل')+bt('mnt',a.id,'صيانة')+bt('part',a.id,'جزء من الأصل')+partBtn(a)+(cu&&cu.r=='user'?'':bt('unas',a.id,'للمخزن'))+bt('log',a.id,'سجل')+decBtn(a)+(cu&&cu.r=='user'?'':bt('del',a.id,'حذف','r'))}</tr>`).join('')+`</table></div></div></details>`:'')+
+ (`<div class="addc"><h4>➕ إضافة أصناف للغرفة</h4><div class="bar"><select id="ci" style="flex:2">${IA.length?Object.keys(og).map(g=>`<optgroup label="${esc(g||'بدون فئة')}">${og[g].join('')}</optgroup>`).join(''):'<option value="">أضف أصنافًا من تبويب «الفئات والأصناف» أولًا</option>'}</select><div class="stp"><button type="button" data-st="-1">−</button><input id="cq" inputmode="numeric" value="1"><button type="button" data-st="1">+</button></div><button class="p" data-x="ra">إضافة للغرفة</button></div></div>`)+
+ (G.length?`<div class="sc"><table><tr><th>الصنف<th>المجموعة<th>العدد<th></tr>${G.map((x,i)=>`<tr><td>${esc(x.name)}${smx(x)}<td>${esc(x.cat)||'—'}<td><b>${x.list.length}</b><td class="ac">${bt('rinc',i,'+ زيادة','p')+bt('rdec',i,'− إنقاص')+bt('rall',i,'حذف الكل','r')}</tr>`).join('')}<tr><td colspan="2"><b>الإجمالي</b><td><b>${L.length}</b><td></tr></table></div>`:'<div class="em">الغرفة فارغة. اختر صنفًا وحدد العدد من الأعلى.</div>')+
+ (L.length?`<details class="rm" style="margin-top:12px" data-c="__room"${OPEN.has('__room')?' open':''}><summary>عرض الأصول بالتفصيل (كود لكل قطعة)</summary><div class="bd"><div class="bar"><button class="p" data-x="bktr">نقل المحدد (Transfer)</button><button class="p" data-x="bksend">إرسال المحدد للصيانة</button>${cu&&cu.r=='admin'?'<button class="r" data-x="bkdc">تكهين المحدد</button>':''}${'<button class="r" data-x="bkdel">حذف المحدد</button><button data-x="bkst">إرجاع المحدد للمخزن</button>'}</div><div class="sc"><table><tr><th><input type="checkbox" id="ska"><th>الكود<th>الأصل<th>الفئة<th>ملاحظات<th></tr>`+L.map(a=>`<tr><td><input type="checkbox" class="sk" value="${a.id}"><td>${esc(a.code)}${partTag(a)}<td>${esc(a.name)}<td>${esc(a.cat)}<td>${esc(a.note)}<td class="ac">${bt('move',a.id,'نقل')+bt('mnt',a.id,'صيانة')+bt('part',a.id,'جزء من الأصل')+partBtn(a)+(bt('unas',a.id,'للمخزن'))+bt('log',a.id,'سجل')+decBtn(a)+(bt('del',a.id,'حذف','r'))}</tr>`).join('')+`</table></div></div></details>`:'')+
  (M.length?`<p class="s" style="margin-top:12px">في الصيانة (من هذه الغرفة): ${M.map(a=>esc(a.name)+' '+esc(a.code)).join('، ')}</p>`:'')
 }
-const trG=a=>`<tr><td>${esc(a.code)}${partTag(a)}<td>${esc(a.name)}<td>${a.mnt?'<span class="g w">في الصيانة</span>':a.room?`<span class="g o">${esc(a.room)}</span>`:'<span class="g">المخزن</span>'}<td class="ac">${a.mnt?'':bt('move',a.id,'نقل')}${a.mnt?'':bt('part',a.id,'جزء من الأصل')}${partBtn(a)}${bt('log',a.id,'سجل')+decBtn(a)}${bt('edit',a.id,'تعديل')}${cu&&cu.r=='user'?'':bt('del',a.id,'حذف','r')}</tr>`;
+const trG=a=>`<tr><td>${esc(a.code)}${partTag(a)}<td>${esc(a.name)}<td>${a.mnt?'<span class="g w">في الصيانة</span>':a.room?`<span class="g o">${esc(a.room)}</span>`:'<span class="g">المخزن</span>'}<td class="ac">${a.mnt?'':bt('move',a.id,'نقل')}${a.mnt?'':bt('part',a.id,'جزء من الأصل')}${partBtn(a)}${bt('log',a.id,'سجل')+decBtn(a)}${bt('edit',a.id,'تعديل')}${bt('del',a.id,'حذف','r')}</tr>`;
 function vG(){
  const cs=allCats(),un=itemsOf('');
  const KC={};A.forEach(a=>{const z=a.cat+SEP+a.name;KC[z]=(KC[z]||0)+1});const row=(c,n)=>{const k=KC[c+SEP+n]||0,v=esc(c+SEP+n);return`<tr><td>${esc(n)}<td>${k}<td class="ac">${bt('iren',v,'تعديل')+bt('idel',v,'حذف','r')}</tr>`};
@@ -1690,7 +1693,7 @@ document.addEventListener('click',e=>{
  const b=e.target.closest('[data-tab],[data-x]');if(!b)return;if(b.closest('summary'))e.preventDefault();
  if(b.dataset.tab){tab=b.dataset.tab;if(tab=='h'){RS=null;RQ=''}if(tab=='s')SV=null;return draw()}
  const x=b.dataset.x;if(x=='more'){LIM+=200;$('#list').innerHTML=listA();return}const a=A.find(y=>y.id==b.dataset.i);
- if(cu&&cu.r=='user'&&UDENY.has(x))return note('هذه العملية للمدير فقط');
+ if(isU()&&UDENY.has(x))return note('هذه العملية للمدير فقط');
  if(x=='bell')return bellOpen();
  if(x=='nread'){NFm().filter(n=>!n.read&&n.kind!='delreq').forEach(n=>{n.read=true;nsave(n)});return note('تم')}
  if(x=='nclr'){NFm().filter(n=>n.read).forEach(n=>ncol&&ncol.doc(n.id).delete());return note('تم المسح')}
@@ -1732,7 +1735,7 @@ document.addEventListener('click',e=>{
  if(x=='vas')return vaOpen();
  if(x=='vax')return vaExit();
  if(x=='vago'){const t=US.find(y=>y.uid==b.dataset.i);if(t)vaStart(t);return}
- if(window.VIEWAS&&UDENY.has(x))return note('وضع المعاينة: للعرض فقط');
+ if(window.VIEWAS&&!window.VIEWAS.edit&&UDENY_RO.has(x))return note('وضع المعاينة: للعرض فقط');
  if(x=='swu'){if(window.VIEWAS)vaExit();window.SWU=1;window.NEWLOGIN=0;return lockUI()}
  if(x=='swback'){window.SWU=0;return lockUI()}
  if(x=='swnew'){window.SWU=0;window.NEWLOGIN=1;window.HOTEL_SEL='';return lockUI()}
@@ -1786,7 +1789,7 @@ document.addEventListener('click',e=>{
  if(x=='rimp')return impRooms();
  if(x=='addr'){const t=A.find(y=>y.id==$('#qa').value);return t?doMove(t,sel):note('اختر الأصل')}
  if(x=='delroom'){
-  if(cu&&cu.r=='user')return reqDelRoom(sel);
+  
   const r=sel,L=A.filter(y=>!y.mnt&&y.room==r),M=A.filter(y=>y.mnt&&y.from==r).length;
   return ask('حذف الغرفة',[],async()=>{tab='r';await rmMany(L.map(y=>y.id));await delRoom(r);draw();note('تم حذف الغرفة '+r)},1,`<p>سيتم حذف غرفة «${esc(r)}» ${L.length?`<b>مع ${L.length} أصل بداخلها</b> نهائيًا`:'(فارغة)'}، ولا يمكن التراجع.</p>${M?`<p class="s">الأصول المرسلة للصيانة من هذه الغرفة (${M}) لن تُحذف.</p>`:''}`)
  }
