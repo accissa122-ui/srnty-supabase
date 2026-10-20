@@ -419,6 +419,11 @@ body.va .hd #hb .menu button[data-x=lkc],body.va .hd #hb .menu button[data-x=lke
 
 @media print{#mn,#tg{display:none!important}}
 
+.dc{min-width:40px;font-weight:700;border-radius:99px;padding:3px 12px;border:1px solid var(--p);color:var(--p);background:transparent}
+.dc:hover{background:color-mix(in srgb,var(--p) 12%,var(--c))}
+.cd{font-weight:700;white-space:nowrap;direction:ltr;text-align:right}
+.dt{width:100%;min-width:0;font-size:13px}.dt th,.dt td{padding:6px 8px}.dt td.cs{font-size:12px;color:var(--m);direction:ltr;text-align:left;word-break:break-word}
+.hs{margin:12px 0 4px}.hs .bar{margin-bottom:8px}.hs input{font-size:16px;padding:12px 14px;border-radius:12px}
 </style></head><body><div id="verstamp" style="position:fixed;bottom:4px;left:8px;z-index:3;font:11px/1.2 sans-serif;color:#64748b;background:rgba(255,255,255,.85);padding:2px 6px;border-radius:6px;pointer-events:none">إصدار: أجزاء الأصول ٥ · supabase</div>
 <header class="hd"><img id="lg0" alt="SRNTY" src="data:image/png;base64,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"><div><h1>إدارة الأصول الثابتة لمجموعة فنادق سيرينتي</h1><p class="s">تسجيل الأصول وتوزيعها على الغرف ومتابعة إرسالها للصيانة وعودتها</p></div><div class="hb" id="hb"><span class="g" style="color:#fff;border-color:#3a3b40">👤 SRNTY</span><button data-x="usr">المستخدمون</button><button data-x="lkc">كلمة المرور</button><button data-x="lkn">خروج</button></div></header>
 <nav id="mn" aria-label="التنقل الرئيسي" hidden><button data-tab="h"><svg class="si " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/></svg><span>الرئيسية</span></button><button data-tab="g"><svg class="si " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg><span>الفئات والأصناف</span></button><button data-tab="r"><svg class="si " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v17"/><path d="M3 21h18"/><circle cx="15" cy="12.5" r=".9"/></svg><span>الغرف</span></button><button data-tab="o"><svg class="si " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg><span>الأذونات</span></button><button data-tab="x" hidden><svg class="si " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 11h6M9 15h4"/></svg><span>الأذونات الخارجية</span></button></nav>
@@ -463,6 +468,7 @@ window.HOTELS = [
     removeItem: k => { try { localStorage.removeItem(k); sessionStorage.removeItem(k); } catch (e) {} }
   };
   const sb = supabase.createClient(cfg.url, cfg.anon, { auth: { storage, storageKey: 'srnty-auth', persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
+  window.SBX = sb;   // للبحث عن توزيع الأصل في كل الفنادق
   // ---- حسابات محفوظة على هذا الجهاز (للتبديل بين المستخدمين) ----
   const AK = 'srnty-accts';
   const aLoad = () => { try { return JSON.parse(localStorage.getItem(AK) || '[]'); } catch (e) { return []; } };
@@ -629,6 +635,15 @@ window.HOTELS = [
   const chunk = (a, n) => { const r = []; for (let i = 0; i < a.length; i += n) r.push(a.slice(i, i + n)); return r; };
   const poolRun = async (items, n, fn) => { let i = 0; const w = async () => { while (i < items.length) { const it = items[i++]; await fn(it); } }; await Promise.all(Array.from({ length: Math.min(n, items.length) }, w)); };
 
+  // ---- نسخة محلية من الأصول (IndexedDB) + قراءة التغييرات فقط (تتطلب عمود updated_at) ----
+  let IDBC = (() => {
+    let p; const open = () => p || (p = new Promise((ok, no) => { try { const r = indexedDB.open('srnty-cache', 1); r.onupgradeneeded = () => r.result.createObjectStore('c'); r.onsuccess = () => ok(r.result); r.onerror = () => no(r.error); } catch (e) { no(e); } }));
+    const tx = async (m, f) => { const db = await open(); return new Promise((ok, no) => { const t = db.transaction('c', m), q = f(t.objectStore('c')); t.oncomplete = () => ok(q && q.result); t.onerror = () => no(t.error); t.onabort = () => no(t.error); }); };
+    return { get: k => tx('readonly', s => s.get(k)).catch(() => null), set: (k, v) => tx('readwrite', s => s.put(v, k)).catch(() => {}) };
+  })();
+  let INC_BAD = false;   // لو العمود غير موجود في القاعدة نرجع للتحميل الكامل كما كان
+  const colErr = e => !!e && (e.code === '42703' || /updated_at/i.test(String(e.message || '')));
+  const tms = s => { const t = new Date(s).getTime(); return isNaN(t) ? 0 : t; };
   window.FBC = name => {
     const tb = T(name), sc = SC.has(name);
     return {
@@ -665,23 +680,56 @@ window.HOTELS = [
         });
         const flush = () => { pt = 0; if (stopped || !pend.length) return; const c = pend; pend = []; cb(snapOf(c)); };
         const queue = ch => { pend.push(ch); if (!pt) pt = setTimeout(flush, 30); };
+        let cur = '', ckey = null, cdt = 0;
+        const inc0 = tb === 'c_assets';
+        const saveC = () => { if (!inc0 || !ckey || ckey === 'x' || !cur) return; clearTimeout(cdt); cdt = setTimeout(() => { if (!stopped) IDBC.set(ckey, { cur, rows: [...st.entries()].map(([id, v]) => [id, v.o]) }); }, 2500); };
+        const pullPages = async mk => { const out = []; for (let off = 0; ; off += 1000) { const { data, error } = await mk().range(off, off + 999); if (error) throw error; out.push(...data); if (data.length < 1000) break; } return out; };
+        // مزامنة تدريجية: النسخة المحلية + الصفوف المتغيّرة فقط + المعرّفات (لاكتشاف المحذوف)
+        const incSync = async hh => {
+          if (!ckey) { try { const { data } = await sb.auth.getSession(); const u = data && data.session && data.session.user; ckey = u ? 'a|' + u.id + '|' + hh : 'x'; } catch (e) { ckey = 'x'; } }
+          if (ckey === 'x') return false;
+          if (!loaded && !cur) {
+            const c = await IDBC.get(ckey);
+            if (c && c.cur && Array.isArray(c.rows) && c.rows.length) {
+              c.rows.forEach(([id, o]) => st.set(id, { o, js: JSON.stringify(o) }));
+              cur = c.cur; loaded = true;
+              if (!stopped) cb(snapOf([...st.entries()].map(([id, v]) => ({ type: 'added', doc: { id, data: () => v.o } }))));
+            }
+          }
+          if (!cur) return false;
+          const since = new Date(tms(cur) - 120000).toISOString();
+          const nw = await pullPages(() => sb.from(tb).select('id,data,updated_at').eq('hotel', hh).gte('updated_at', since).order('updated_at').order('id'));
+          const ids = new Set((await pullPages(() => sb.from(tb).select('id').eq('hotel', hh).order('id'))).map(r => r.id));
+          const changes = [];
+          nw.forEach(r => { const js = JSON.stringify(r.data), p = st.get(r.id); if (!p) changes.push({ type: 'added', doc: { id: r.id, data: () => r.data } }); else if (p.js !== js) changes.push({ type: 'modified', doc: { id: r.id, data: () => r.data } }); st.set(r.id, { o: r.data, js }); if (tms(r.updated_at) > tms(cur)) cur = r.updated_at; });
+          [...st.keys()].forEach(id => { if (!ids.has(id)) { const o = st.get(id).o; st.delete(id); changes.push({ type: 'removed', doc: { id, data: () => o } }); } });
+          loaded = true;
+          if (!stopped && changes.length) changes.forEach(queue);
+          saveC(); return true;
+        };
         const resync = async () => {
           if (syncing) { again = true; return; }
           syncing = true;
           try {
-            const rows = [], hh = sc ? HS() : '';
-            for (let off = 0; ; off += 1000) {
-              let q = sb.from(tb).select('id,data').order('id');
-              if (sc) q = q.order('hotel');
-              if (sc && hh && hh !== '*') q = q.eq('hotel', hh);
-              const { data, error } = await q.range(off, off + 999); if (error) throw error;
-              rows.push(...data); if (data.length < 1000) break;
+            const hh = sc ? HS() : '';
+            let done = false;
+            if (inc0 && !INC_BAD && hh && hh !== '*') {
+              try { done = await incSync(hh); }
+              catch (e) { done = false; if (colErr(e)) INC_BAD = true; else { try { console.error('inc-sync', e); } catch (_) {} } }
             }
-            const nw = new Map(rows.map(r => [r.id, r.data])), changes = [];
-            nw.forEach((o, id) => { const js = JSON.stringify(o), p = st.get(id); if (!p) changes.push({ type: 'added', doc: { id, data: () => o } }); else if (p.js !== js) changes.push({ type: 'modified', doc: { id, data: () => o } }); st.set(id, { o, js }); });
-            [...st.keys()].forEach(id => { if (!nw.has(id)) { const o = st.get(id).o; st.delete(id); changes.push({ type: 'removed', doc: { id, data: () => o } }); } });
-            loaded = true;
-            if (!stopped) { pend = []; clearTimeout(pt); pt = 0; cb(snapOf(changes)); }
+            if (!done) {
+              const useC = inc0 && !INC_BAD && !!hh && hh !== '*';
+              const full = cols => pullPages(() => { let q = sb.from(tb).select(cols).order('id'); if (sc) q = q.order('hotel'); if (sc && hh && hh !== '*') q = q.eq('hotel', hh); return q; });
+              let rows;
+              try { rows = await full(useC ? 'id,data,updated_at' : 'id,data'); }
+              catch (e) { if (useC && colErr(e)) { INC_BAD = true; rows = await full('id,data'); } else throw e; }
+              const nw = new Map(rows.map(r => [r.id, r.data])), changes = [];
+              nw.forEach((o, id) => { const js = JSON.stringify(o), p = st.get(id); if (!p) changes.push({ type: 'added', doc: { id, data: () => o } }); else if (p.js !== js) changes.push({ type: 'modified', doc: { id, data: () => o } }); st.set(id, { o, js }); });
+              [...st.keys()].forEach(id => { if (!nw.has(id)) { const o = st.get(id).o; st.delete(id); changes.push({ type: 'removed', doc: { id, data: () => o } }); } });
+              loaded = true;
+              if (!stopped) { pend = []; clearTimeout(pt); pt = 0; cb(snapOf(changes)); }
+              if (useC && !INC_BAD) { rows.forEach(r => { if (r.updated_at && tms(r.updated_at) > tms(cur)) cur = r.updated_at; }); saveC(); }
+            }
           } catch (e) {
             try { console.error('snapshot', tb, e); } catch (_) {}
             if (sc && /hotel/i.test(String((e && e.message) || ''))) { try { window.note && window.note('عمود الفندق غير موجود في قاعدة البيانات: شغّل ملف 03_hotels.sql في Supabase ثم حدّث الصفحة', 9000); } catch (_) {} }
@@ -701,12 +749,12 @@ window.HOTELS = [
           const t = p.eventType; let id, o, type;
           if (t === 'DELETE') { id = p.old && p.old.id; if (id == null || !st.has(id)) return; o = st.get(id).o; st.delete(id); type = 'removed'; }
           else { id = p.new.id; o = p.new.data; const js = JSON.stringify(o), prev = st.get(id); if (prev && prev.js === js) return; st.set(id, { o, js }); type = prev ? 'modified' : 'added'; }
-          queue({ type, doc: { id, data: () => o } });
+          saveC(); queue({ type, doc: { id, data: () => o } });
         };
         const chn = sb.channel('rt_' + tb + '_' + Math.random().toString(36).slice(2, 7))
           .on('postgres_changes', { event: '*', schema: 'public', table: tb }, apply)
           .subscribe(s => { if (s === 'SUBSCRIBED') resync(); });
-        const fb = setTimeout(() => { if (!loaded) resync(); }, 4000);   // احتياط إن تأخر الاشتراك اللحظي
+        const fb = setTimeout(() => { if (!loaded && !syncing) resync(); }, 4000);   // احتياط إن تأخر الاشتراك اللحظي
         return () => { stopped = true; clearTimeout(fb); clearTimeout(pt); try { sb.removeChannel(chn); } catch (e) {} };
       }
     };
@@ -750,8 +798,9 @@ let CTR={code:0,ord:0,og:0,tr:0,dc:0};
 function bumpCtr(p){let ch=0;for(const k in p)if(p[k]>CTR[k]){CTR[k]=p[k];ch=1}
  if(ch&&window.FBC&&!window.FB_OFF)try{Promise.resolve(FBC('meta').doc('counters').set({code:CTR.code,ord:CTR.ord,og:CTR.og,tr:CTR.tr,dc:CTR.dc})).catch(()=>{})}catch(e){}}
 let NF=null,NSEEN=new Set(),ncol=null;
-const UDENY_RO=new Set(['ra','rinc','rdec','rall','del','bkdel','unas','bkst','new','addr','assign','rimp','imp','addg','gadd','gren','gdel','addc','cadd','iren','idel','cren','cdel','addrooms','newr','wipe']);
-const UDENY=new Set(['rimp','imp','addg','gadd','gren','gdel','addc','cadd','iren','idel','cren','cdel','wipe']);
+const UDENY_RO=new Set(['ra','rinc','rdec','rall','del','bkdel','unas','bkst','new','addr','assign','rimp','imp','addg','gadd','gren','gdel','addc','cadd','iren','idel','cren','cdel','addrooms','newr','wipe','renroom']);
+const UDENY=new Set(['rimp','imp','addg','gadd','gren','gdel','addc','cadd','iren','idel','cren','cdel','wipe','renroom']);
+const isAd=()=>{const u=window.VIEWAS&&window.VIEWAS.edit?window.VIEWAS.real:cu;return!!(u&&u.r=='admin')};
 function isU(){return !!(cu&&cu.r=='user'&&!(window.VIEWAS&&window.VIEWAS.edit))}
 
 const NFm=()=>(NF||[]).filter(n=>n.to==(cu&&cu.u)||(n.to=='admin'&&cu&&cu.r=='admin')||(n.to=='purchasing'&&cu&&cu.r=='purchasing')||(n.to=='maintenance'&&cu&&cu.r=='maintenance')).sort((x,y)=>x.at<y.at?1:-1);
@@ -798,7 +847,33 @@ function vP(){
 let SEEN_MNT=null,OQ='',OT='in',RS=null,RQ='';
 function note(m,ms){const t=$('#t');t.textContent=m;t.hidden=false;clearTimeout(note.h);note.h=setTimeout(()=>t.hidden=true,ms||2600)}
 function loc(){try{localStorage.setItem('assets',JSON.stringify(A))}catch(e){}}
+// ===== كود الأصل = سيريال: رقم الصنف (ثابت لكل اسم داخل الفندق) - رقم القطعة، مثال 1-1 و1-2 =====
+const serKey=a=>String(a.name||'').trim();
+const tyOf=n=>n?'AST-'+String(n).padStart(3,'0'):'';
+const serOf=a=>a&&a.isn?tyOf(a.isn)+'-'+String(a.usn||1).padStart(4,'0'):'';
+const SRX=/^(AST-)?\d+-\d+$/;
+const needsSer=a=>!a.isn||a.sname!==serKey(a)||a.code!==serOf(a);
+const setCode=a=>{const c=serOf(a);if(a.code&&a.code!==c&&!a.ocode&&!SRX.test(a.code))a.ocode=a.code;a.code=c};
+function assignSer(L){
+ const need=L.filter(needsSer);
+ if(!need.length)return;
+ const fresh=need.filter(a=>!a.isn||a.sname!==serKey(a)).sort((x,y)=>nat(x.code||'',y.code||''));
+ const T=new Map();let mx=0;
+ A.concat(AD).forEach(x=>{if(fresh.includes(x))return;if(x.isn){mx=Math.max(mx,+x.isn||0);if(x.sname===serKey(x)){const k=serKey(x);let t=T.get(k);if(!t){t={i:+x.isn,u:0};T.set(k,t)}t.u=Math.max(t.u,+x.usn||0)}}});
+ fresh.forEach(a=>{const k=serKey(a);let t=T.get(k);if(!t){t={i:++mx,u:0};T.set(k,t)}a.isn=t.i;a.usn=++t.u;a.sname=k});
+ need.forEach(setCode);
+}
+let ASD='';
+function ensureAsn(){
+ const h=window.HOTEL_SEL||'';
+ if(!col||!gotA||!h||h=='*'||ASD===h||!(cu&&cu.r=='admin')||(window.VIEWAS&&!window.VIEWAS.edit))return;
+ ASD=h;
+ const need=A.concat(AD).filter(needsSer);
+ if(!need.length)return;
+ assignSer(need);note('جارٍ ترقيم الأصول ('+need.length+')…',4000);putMany(need)
+}
 async function put(a){
+ assignSer([a]);
  if(col){const{id,...d}=a;try{await col.doc(id).set(d)}catch(e){note('تعذّر الحفظ')}return}
  const i=A.findIndex(x=>x.id==a.id);i<0?A.push(a):A[i]=a;loc();draw()
 }
@@ -817,7 +892,7 @@ function startData(){
   ncol.onSnapshot(s=>{const first=NF==null;NF=s.docs.map(d=>({...d.data(),id:d.id}));bellUpd();if(first){NSEEN=new Set(NF.map(n=>n.id));return}NFm().filter(n=>!n.read&&!NSEEN.has(n.id)).forEach(n=>{NSEEN.add(n.id);note('🔔 '+n.msg,6000);try{if(window.Notification&&Notification.permission=='granted')new Notification('إشعار جديد',{body:n.msg,icon:LOGO})}catch(e){}})},()=>{}),
   col.onSnapshot(s=>{s.docChanges().forEach(c=>{if(c.type=='removed')AM.delete(c.doc.id);else AM.set(c.doc.id,{...c.doc.data(),id:c.doc.id})});{const _al=[...AM.values()];A=_al.filter(x=>!x.dec);AD=_al.filter(x=>x.dec)}gotA=true;dq()},er),
   rcol.onSnapshot(s=>{R=s.docs.map(d=>d.data().n).filter(Boolean);RG={};RN={};SNM={};gotR=true;s.docs.forEach(d=>{const x=d.data();if(x.n&&x.sn)SNM[x.n]=Number(x.sn);if(x.n&&x.g)RG[x.n]=x.g;if(x.n&&(x.nm||x.no))RN[x.n]={nm:x.nm||'',no:x.no||''}});dq()},er),
-  C('meta').onSnapshot(s=>{const d=s.docs.find(x=>x.id=='counters');if(d){const x=d.data();CTR={code:Math.max(CTR.code,+x.code||0),ord:Math.max(CTR.ord,+x.ord||0),og:Math.max(CTR.og,+x.og||0),tr:Math.max(CTR.tr,+x.tr||0),dc:Math.max(CTR.dc,+x.dc||0)}}},()=>{}),
+  C('meta').onSnapshot(s=>{const cl=s.docs.find(x=>x.id=='cls');if(cl){KM=cl.data().m||{};dq()}const d=s.docs.find(x=>x.id=='counters');if(d){const x=d.data();CTR={code:Math.max(CTR.code,+x.code||0),ord:Math.max(CTR.ord,+x.ord||0),og:Math.max(CTR.og,+x.og||0),tr:Math.max(CTR.tr,+x.tr||0),dc:Math.max(CTR.dc,+x.dc||0)}}},()=>{}),
   gcol.onSnapshot(s=>{GL=s.docs.map(d=>d.data().n).filter(Boolean);dq()},er),
   ccol.onSnapshot(s=>{GC=s.docs.map(d=>d.data().n).filter(Boolean);dq()},er),
   icol.onSnapshot(s=>{IT=s.docs.map(d=>({n:d.data().n,g:d.data().g||''})).filter(x=>x.n);dq()},er),
@@ -1073,6 +1148,7 @@ function impRooms(){
  d.showModal()
 }
 async function putMany(L){
+ assignSer(L);
  bumpCtr({code:Math.max(0,...L.map(a=>+((/(\d+)$/.exec(a.code)||[])[1]||0)))});
  if(col){try{const r=col.setMany?await col.setMany(L.map(a=>{const{id,...d}=a;return{id,d}})):await pool(L,a=>{const{id,...d}=a;return col.doc(id).set(d)},40,'الحفظ');poolEnd(r,'حفظ')}catch(e){note('تعذّر الحفظ')}return}
  L.forEach(a=>{const i=A.findIndex(x=>x.id==a.id);i<0?A.push(a):A[i]=a});loc();draw()
@@ -1083,6 +1159,21 @@ async function addRooms(L,g){
  g=g||'';L.forEach(n=>{if(!SNM[n])SNM[n]=nextSN()});
  if(rcol){try{await Promise.all(L.map(n=>rcol.doc(rid(n)).set(rdoc(n,g))))}catch(e){note('تعذّر الحفظ')}return}
  R=[...new Set([...R,...L])];L.forEach(n=>{if(g)RG[n]=g;else delete RG[n]});locR();draw()
+}
+async function renRoom(o,n){
+ n=String(n||'').trim();if(!n||n==o)return;
+ if(!isAd())return note('هذه العملية للمدير فقط');
+ if(allRooms().includes(n))return note('اسم الغرفة مستخدم');
+ const L=A.filter(a=>a.room==o||a.from==o),g=RG[o]||'',d={n,g,...(RN[o]||{}),...(SNM[o]?{sn:SNM[o]}:{})};
+ if(rcol){
+  try{await rcol.doc(rid(n)).set(d)}catch(e){note('تعذّر الحفظ');return}
+  L.forEach(a=>{if(a.room==o)a.room=n;if(a.from==o)a.from=n});if(sel==o)sel=n;
+  if(L.length)await putMany(L);
+  try{await rcol.doc(rid(o)).delete()}catch(e){note('تعذّر حذف الاسم القديم')}
+  return note('تم تعديل اسم الغرفة')}
+ L.forEach(a=>{if(a.room==o)a.room=n;if(a.from==o)a.from=n});
+ R=R.map(x=>x==o?n:x);if(g)RG[n]=g;delete RG[o];if(RN[o])RN[n]=RN[o];delete RN[o];if(SNM[o])SNM[n]=SNM[o];delete SNM[o];if(sel==o)sel=n;
+ locR();await putMany(L);draw();note('تم تعديل اسم الغرفة')
 }
 async function delRoom(n){if(rcol){try{await rcol.doc(rid(n)).delete()}catch(e){note('تعذّر الحذف')}return}R=R.filter(x=>x!=n);delete RG[n];delete RN[n];locR();draw()}
 const allGroups=()=>[...new Set([...GL,...Object.values(RG)].filter(Boolean))].sort(nat);
@@ -1160,7 +1251,7 @@ function ask(t,fs,ok,danger,html){
 }
 function edit(a,pr,pc){
  const n=!a;a=a||{};
- ask(n?'➕ أصل جديد':'✏️ تعديل الأصل',[{l:'الكود',h:'اتركه فارغًا للترقيم التلقائي',v:a.code,hf:1,o:5},{l:'اسم الأصل',v:a.name,r:1,o:1},{l:'الفئة / المجموعة',v:a.cat||pc,dl:'cl',hf:1,o:2},...(n?[{l:'الكمية',h:'حتى 500 قطعة',v:'1',r:1,n:1,hf:1,o:3},{l:'الغرفة / الموقع',h:'اختياري',v:pr||'',dl:'rl',hf:1,o:4}]:[]),{l:'ملاحظات',v:a.note,ta:1,o:6}],v=>{
+ ask(n?'➕ أصل جديد':'✏️ تعديل الأصل',[{l:'الكود (تلقائي)',h:'يُحدَّد تلقائيًا مثل AST-001-0001 (يتجاهل أي قيمة هنا)',v:a.code,hf:1,o:5},{l:'اسم الأصل',v:a.name,r:1,o:1},{l:'الفئة / المجموعة',v:a.cat||pc,dl:'cl',hf:1,o:2},...(n?[{l:'الكمية',h:'حتى 500 قطعة',v:'1',r:1,n:1,hf:1,o:3},{l:'الغرفة / الموقع',h:'اختياري',v:pr||'',dl:'rl',hf:1,o:4}]:[]),{l:'ملاحظات',v:a.note,ta:1,o:6}],v=>{
   const room=n?v[4]:a.room,nt=n?v[5]:v[3],qty=n?Math.min(500,Math.max(1,parseInt(v[3])||1)):1;
   const mx=Math.max(0,...A.map(x=>+((/(\d+)$/.exec(x.code)||[])[1]||0)));
   const codes=[];for(let i=0;i<qty;i++)codes.push(qty>1?(v[0]?v[0]+'-'+String(i+1).padStart(3,'0'):'AST-'+String(mx+i+1).padStart(4,'0')):(v[0]||'AST-'+String(mx+1).padStart(4,'0')));
@@ -1433,7 +1524,7 @@ function rbody(){
  const rs=allRooms(),gs=allGroups(),q=RQ.trim().toLowerCase();
  const card=r=>`<div class="rc"><b>${esc(r)}</b><span>${SNM[r]?'رقم '+SNM[r]+' · ':''}${RG[r]?esc(RG[r])+' · ':''}${c[r]||0} أصل</span>${bt('open',esc(r),'دخول الغرفة','p')}</div>`;
   if(RS!==null&&RS!==''&&!gs.includes(RS))RS=null;
- const hd=RS!==null?`<div class="top"><button class="bk" data-x="rgb">→ المجموعات</button><b>${RS?esc(RS):'بدون مجموعة'}</b><span style="margin-inline-start:auto;display:flex;gap:6px;flex-wrap:wrap">${bt('gadd',esc(RS),'+ إضافة غرف','p')}${bt('gxl',esc(RS),'⬇ تصدير شيت المجموعة')}${RS?bt('gren',esc(RS),'تعديل')+bt('gdel',esc(RS),'حذف','r'):''}</span></div>`:'';
+ const hd=RS!==null?`<div class="top"><button class="bk" data-x="rgb">→ المجموعات</button><b>${RS?esc(RS):'بدون مجموعة'}</b><span style="margin-inline-start:auto;display:flex;gap:6px;flex-wrap:wrap">${bt('gadd',esc(RS),'+ إضافة غرف','p')}${bt('gxl',esc(RS),'⬇ تصدير شيت المجموعة')}${RS?(isAd()?bt('gren',esc(RS),'تعديل'):'')+bt('gdel',esc(RS),'حذف','r'):''}</span></div>`:'';
  if(q||RS!==null){const L=rs.filter(r=>(RS===null||(RG[r]||'')==RS)&&(!q||r.toLowerCase().includes(q)));
   if(!q)return hd+`<div class="em">في هذه المجموعة ${L.length} غرفة — اكتب اسم الغرفة أو رقمها في خانة البحث لعرضها</div>`;
   return hd+(L.length?`<p class="s">${L.length} نتيجة</p><div class="gr">${L.map(card).join('')}</div>`:'<div class="em">لا توجد غرفة بهذا الاسم</div>')}
@@ -1445,21 +1536,34 @@ const sm=L=>{const g=grp(L);return`<p class="s" style="margin:0 0 10px"><b>ال�
 function vV(){
  const r=sel,L=A.filter(a=>!a.mnt&&a.room==r).sort((x,y)=>nat(x.code,y.code)),M=A.filter(a=>a.mnt&&a.from==r),G=rgrp(r),IA=itemsAll(),og={};
  IA.forEach((x,i)=>(og[x.g]=og[x.g]||[]).push(`<option value="${i}">${esc(x.n)}</option>`));
- return`<div class="bar"><button data-x="bk">→ كل الغرف</button><h2>${esc(r)} <small class="s">${SNM[r]?'· رقم '+SNM[r]+' ':''}${RG[r]?'· '+esc(RG[r])+' ':''}(${L.length} أصل)</small></h2><button data-x="print">🖨 طباعة</button><button data-x="xl">⬇ تصدير شيت الغرفة</button><button class="r" data-x="delroom">🗑 حذف الغرفة</button></div>`+
+ return`<div class="bar"><button data-x="bk">→ كل الغرف</button><h2>${esc(r)} <small class="s">${SNM[r]?'· رقم '+SNM[r]+' ':''}${RG[r]?'· '+esc(RG[r])+' ':''}(${L.length} أصل)</small></h2><button data-x="print">🖨 طباعة</button><button data-x="xl">⬇ تصدير شيت الغرفة</button>${isAd()?'<button data-x="renroom">✏️ تعديل اسم الغرفة</button>':''}<button class="r" data-x="delroom">🗑 حذف الغرفة</button></div>`+
  `<div class="bar"><label class="s" style="align-self:center">المجموعة:</label><select id="rg" style="flex:1"><option value="">بدون مجموعة</option>${allGroups().map(g=>`<option value="${esc(g)}"${RG[r]==g?' selected':''}>${esc(g)}</option>`).join('')}</select></div>`+
  (`<div class="addc"><h4>➕ إضافة أصناف للغرفة</h4><div class="bar"><select id="ci" style="flex:2">${IA.length?Object.keys(og).map(g=>`<optgroup label="${esc(g||'بدون فئة')}">${og[g].join('')}</optgroup>`).join(''):'<option value="">أضف أصنافًا من تبويب «الفئات والأصناف» أولًا</option>'}</select><div class="stp"><button type="button" data-st="-1">−</button><input id="cq" inputmode="numeric" value="1"><button type="button" data-st="1">+</button></div><button class="p" data-x="ra">إضافة للغرفة</button></div></div>`)+
- (G.length?`<div class="sc"><table><tr><th>الصنف<th>المجموعة<th>العدد<th></tr>${G.map((x,i)=>`<tr><td>${esc(x.name)}${smx(x)}<td>${esc(x.cat)||'—'}<td><b>${x.list.length}</b><td class="ac">${bt('rinc',i,'+ زيادة','p')+bt('rdec',i,'− إنقاص')+bt('rall',i,'حذف الكل','r')}</tr>`).join('')}<tr><td colspan="2"><b>الإجمالي</b><td><b>${L.length}</b><td></tr></table></div>`:'<div class="em">الغرفة فارغة. اختر صنفًا وحدد العدد من الأعلى.</div>')+
- (L.length?`<details class="rm" style="margin-top:12px" data-c="__room"${OPEN.has('__room')?' open':''}><summary>عرض الأصول بالتفصيل (كود لكل قطعة)</summary><div class="bd"><div class="bar"><button class="p" data-x="bktr">نقل المحدد (Transfer)</button><button class="p" data-x="bksend">إرسال المحدد للصيانة</button>${cu&&cu.r=='admin'?'<button class="r" data-x="bkdc">تكهين المحدد</button>':''}${'<button class="r" data-x="bkdel">حذف المحدد</button><button data-x="bkst">إرجاع المحدد للمخزن</button>'}</div><div class="sc"><table><tr><th><input type="checkbox" id="ska"><th>الكود<th>الأصل<th>الفئة<th>ملاحظات<th></tr>`+L.map(a=>`<tr><td><input type="checkbox" class="sk" value="${a.id}"><td>${esc(a.code)}${partTag(a)}<td>${esc(a.name)}<td>${esc(a.cat)}<td>${esc(a.note)}<td class="ac">${bt('move',a.id,'نقل')+bt('mnt',a.id,'صيانة')+bt('part',a.id,'جزء من الأصل')+partBtn(a)+(bt('unas',a.id,'للمخزن'))+bt('log',a.id,'سجل')+decBtn(a)+(bt('del',a.id,'حذف','r'))}</tr>`).join('')+`</table></div></div></details>`:'')+
+ (G.length?`<div class="sc"><table><tr><th>الكود<th>الصنف<th>المجموعة<th>العدد<th></tr>${G.map((x,i)=>`<tr><td><b>${esc(String((x.list[0]&&x.list[0].isn)?tyOf(x.list[0].isn):''))||'—'}</b><td>${esc(x.name)}${smx(x)}<td>${esc(x.cat)||'—'}<td><b>${x.list.length}</b><td class="ac">${bt('rinc',i,'+ زيادة','p')+bt('rdec',i,'− إنقاص')+bt('rall',i,'حذف الكل','r')}</tr>`).join('')}<tr><td colspan="3"><b>الإجمالي</b><td><b>${L.length}</b><td></tr></table></div>`:'<div class="em">الغرفة فارغة. اختر صنفًا وحدد العدد من الأعلى.</div>')+
+ (L.length?`<details class="rm" style="margin-top:12px" data-c="__room"${OPEN.has('__room')?' open':''}><summary>عرض الأصول بالتفصيل (كود لكل قطعة مثل AST-001-0001)</summary><div class="bd"><div class="bar"><button class="p" data-x="bktr">نقل المحدد (Transfer)</button><button class="p" data-x="bksend">إرسال المحدد للصيانة</button>${cu&&cu.r=='admin'?'<button class="r" data-x="bkdc">تكهين المحدد</button>':''}${'<button class="r" data-x="bkdel">حذف المحدد</button><button data-x="bkst">إرجاع المحدد للمخزن</button>'}</div><div class="sc"><table><tr><th><input type="checkbox" id="ska"><th>الكود<th>الأصل<th>الفئة<th>ملاحظات<th></tr>`+L.map(a=>`<tr><td><input type="checkbox" class="sk" value="${a.id}"><td>${esc(a.code)}${partTag(a)}<td>${esc(a.name)}<td>${esc(a.cat)}<td>${esc(a.note)}<td class="ac">${bt('move',a.id,'نقل')+bt('mnt',a.id,'صيانة')+bt('part',a.id,'جزء من الأصل')+partBtn(a)+(bt('unas',a.id,'للمخزن'))+bt('log',a.id,'سجل')+decBtn(a)+(bt('del',a.id,'حذف','r'))}</tr>`).join('')+`</table></div></div></details>`:'')+
  (M.length?`<p class="s" style="margin-top:12px">في الصيانة (من هذه الغرفة): ${M.map(a=>esc(a.name)+' '+esc(a.code)).join('، ')}</p>`:'')
 }
 const trG=a=>`<tr><td>${esc(a.code)}${partTag(a)}<td>${esc(a.name)}<td>${a.mnt?'<span class="g w">في الصيانة</span>':a.room?`<span class="g o">${esc(a.room)}</span>`:'<span class="g">المخزن</span>'}<td class="ac">${a.mnt?'':bt('move',a.id,'نقل')}${a.mnt?'':bt('part',a.id,'جزء من الأصل')}${partBtn(a)}${bt('log',a.id,'سجل')+decBtn(a)}${bt('edit',a.id,'تعديل')}${bt('del',a.id,'حذف','r')}</tr>`;
+function showDist(g,n){
+ const U=A.filter(a=>a.cat==g&&a.name==n),rm=new Map(),st=[],mt=[];
+ U.slice().sort((x,y)=>(+x.usn||0)-(+y.usn||0)||nat(x.code||'',y.code||'')).forEach(a=>{if(a.mnt)mt.push(a);else if(a.room){(rm.get(a.room)||rm.set(a.room,[]).get(a.room)).push(a)}else st.push(a)});
+ const cs=L=>esc(fSr(L.map(a=>a.code)))||'—';
+ const rows=[...rm.entries()].sort((x,y)=>nat(x[0],y[0])).map(([r,L])=>`<tr><td>${esc(r)}<td>${esc(RG[r]||'')||'—'}<td><b>${L.length}</b><td class="cs">${cs(L)}</tr>`);
+ if(mt.length)rows.push(`<tr><td><span class="g w">في الصيانة</span><td>—<td><b>${mt.length}</b><td class="cs">${cs(mt)}</tr>`);
+ if(st.length)rows.push(`<tr><td><span class="g">في المخزن</span><td>—<td><b>${st.length}</b><td class="cs">${cs(st)}</tr>`);
+ const isn=(U.find(a=>a.isn)||{}).isn;
+ ask(esc(n),[],null,0,`<p class="s" style="margin:0 0 10px">الكود ${esc(tyOf(isn)||'—')} · ${esc(g||'بدون فئة')} · الإجمالي ${U.length}</p>`+(rows.length?`<div class="sc"><table class="dt"><tr><th>الغرفة<th>المجموعة<th>العدد<th>الأكواد</tr>${rows.join('')}<tr style="background:var(--tint);font-weight:700"><td colspan="2">الإجمالي<td>${U.length}<td></tr></table></div>`:'<div class="em">لا توجد قطع موزّعة</div>'));
+ $('#d').style.width='min(94vw,560px)'
+}
 function vG(){
  const cs=allCats(),un=itemsOf('');
- const KC={};A.forEach(a=>{const z=a.cat+SEP+a.name;KC[z]=(KC[z]||0)+1});const row=(c,n)=>{const k=KC[c+SEP+n]||0,v=esc(c+SEP+n);return`<tr><td>${esc(n)}<td>${k}<td class="ac">${bt('iren',v,'تعديل')+bt('idel',v,'حذف','r')}</tr>`};
- const sec=(c,L)=>`<details class="rm" data-c="${esc(c)}"${OPEN.has(c)?' open':''}><summary>${c?esc(c):'بدون فئة'}<small>${L.length} صنف</small><span class="sp">${c?bt('cadd',esc(c),'+ صنف','p')+bt('cren',esc(c),'تعديل')+bt('cdel',esc(c),'حذف','r'):''}</span></summary><div class="bd">${L.length?`<div class="sc"><table><tr><th>الصنف<th>الموزّع في الغرف<th></tr>${L.map(n=>row(c,n)).join('')}</table></div>`:'<div class="em" style="padding:10px">لا توجد أصناف. اضغط «+ صنف» لإضافة أول صنف.</div>'}</div></details>`;
- return`<div class="bar"><input id="cn" placeholder="اسم مجموعة جديدة (مثال: أثاث، أدوات كهربائية)"><button class="p" data-x="addc">+ إضافة مجموعة</button></div>`+(cs.length||un.length?'':'<div class="em">ابدأ بإضافة مجموعة، ثم أضف أسماء الأصناف بداخلها. بعد ذلك ادخل أي غرفة من تبويب «الغرف» ووزّع الأصناف بالأعداد التي تريدها.</div>')+
+ const KC={},KI={},cf=(c,n)=>!CF||clsOf(c,n)==CF;A.forEach(a=>{const z=a.cat+SEP+a.name;KC[z]=(KC[z]||0)+1;if(!KI[z]&&a.isn)KI[z]=a.isn});const row=(c,n)=>{const z=c+SEP+n,k=KC[z]||0,v=esc(z);return`<tr><td class="cd">${esc(tyOf(KI[z])||'—')}<td>${esc(n)}<td><button class="g" data-x="icls" data-i="${v}" title="تغيير التصنيف">${esc(clsOf(c,n))}</button><td>${k?`<button class="dc" data-x="idist" data-i="${v}" title="عرض أماكن التوزيع">${k}</button>`:'<span class="s">0</span>'}<td class="ac">${bt('iren',v,'تعديل')+bt('idel',v,'حذف','r')}</tr>`};
+ const sec=(c,L)=>CF&&!L.some(n=>cf(c,n))?'':`<details class="rm" data-c="${esc(c)}"${OPEN.has(c)?' open':''}><summary>${c?esc(c):'بدون فئة'}<small>${L.length} صنف</small><span class="sp">${c?bt('cadd',esc(c),'+ صنف','p')+(isAd()?bt('cren',esc(c),'تعديل'):'')+bt('cdel',esc(c),'حذف','r'):''}</span></summary><div class="bd">${L.length?`<div class="sc"><table><tr><th>الكود<th>الصنف<th>التصنيف<th>الموزّع في الغرف<th></tr>${L.filter(n=>cf(c,n)).map(n=>row(c,n)).join('')}</table></div>`:'<div class="em" style="padding:10px">لا توجد أصناف. اضغط «+ صنف» لإضافة أول صنف.</div>'}</div></details>`;
+ const CC={};cs.concat(['']).forEach(c=>itemsOf(c).forEach(n=>{const k=clsOf(c,n);CC[k]=(CC[k]||0)+1}));
+ const chips=`<div class="bar" style="margin-top:0"><button data-x="cfl" data-i=""${CF?'':' class="p"'}>الكل</button>${CLS.map(k=>`<button data-x="cfl" data-i="${esc(k)}"${CF==k?' class="p"':''}>${esc(k)} · ${CC[k]||0}</button>`).join('')}</div>`;
+ return cSearch()+'<div id="gl"'+(fnorm(FQ)?' hidden':'')+'>'+`<div class="bar"><input id="cn" placeholder="اسم مجموعة جديدة (مثال: أثاث، أدوات كهربائية)"><button class="p" data-x="addc">+ إضافة مجموعة</button></div>`+(cs.length||un.length?chips:'')+(cs.length||un.length?'':'<div class="em">ابدأ بإضافة مجموعة، ثم أضف أسماء الأصناف بداخلها. بعد ذلك ادخل أي غرفة من تبويب «الغرف» ووزّع الأصناف بالأعداد التي تريدها.</div>')+
  cs.map(c=>sec(c,itemsOf(c))).join('')+(un.length?sec('',un):'')+
- `<div class="bar" style="margin-top:14px"><button data-x="tm">⬇ نموذج شيت عام</button><button data-x="ex">⬇ تصدير الأصول</button><button data-x="imp">استيراد شيت عام</button><button class="r" data-x="wipe">حذف كل الأصول</button></div>`
+ `<div class="bar" style="margin-top:14px"><button data-x="tm">⬇ نموذج شيت عام</button><button data-x="ex">⬇ تصدير الأصول</button><button data-x="imp">استيراد شيت عام</button><button class="r" data-x="wipe">حذف كل الأصول</button></div>`+'</div>'
 }
 const isOut=a=>{const o=mainOrds(a),r=o[o.length-1];return!!(r&&r.kind=='out'&&!r.rep)};
 function vM(){const p=vPartsM(),b=vM0();return(p&&/^<div class="em">/.test(b)?'':b)+p}
@@ -1652,7 +1756,7 @@ function mntOrder(L,why){
  ask('تنبيه — أجزاء خارجة للصيانة',[],()=>setTimeout(()=>mntOrder0(L,why),0),1,`<p>على هذه الأصول أجزاء خارجة للصيانة بالفعل:</p><ul class="h">${W.slice(0,6).map(a=>`<li>${esc(a.code)} — ${esc(a.name)}: ${openParts(a).map(r=>esc(r.part)).join('، ')}</li>`).join('')}</ul><p class="s">هل تريد المتابعة بإرسال الأصل كاملاً للصيانة؟</p>`)
 }
 
-function topbar(){const T={s:'حسابات الموردين',x:'الأذونات الخارجية والتكلفة',p:'تقارير الصيانة',g:'الفئات والأصناف',r:'الغرف',v:sel,o:'الأذونات',a:'الأصول'},v=tab=='v';return`<div class="top"><button class="bk" data-tab="${v?'r':'h'}"><span>${v?'الغرف':'الرئيسية'}</span></button><i class="sep">›</i><b>${esc(T[tab]||'')}</b></div>`}
+function topbar(){const T={s:'حسابات الموردين',x:'الأذونات الخارجية والتكلفة',p:'تقارير الصيانة',g:'الفئات والأصناف',f:'توزيع الأصل على الغرف',r:'الغرف',v:sel,o:'الأذونات',a:'الأصول'},v=tab=='v';return`<div class="top"><button class="bk" data-tab="${v?'r':'h'}"><span>${v?'الغرف':'الرئيسية'}</span></button><i class="sep">›</i><b>${esc(T[tab]||'')}</b></div>`}
 function vH(){
  const T=A.length,M=A.filter(a=>a.mnt).length,U=A.filter(a=>!a.mnt&&!a.room).length,no=new Set();A.forEach(a=>ordsOf(a).forEach(r=>no.add(r.no)));
  const c=(k,i,t,s,x)=>`<button class="hc" ${x?`data-x="${x}"`:`data-tab="${k}"`}><span class="ic">${i}</span><span class="tx"><b>${t}</b><small>${s}</small></span><i class="cv">${IC.chev}</i></button>`;
@@ -1666,15 +1770,15 @@ const poolEnd=(r,what)=>{if(r.bad)setTimeout(()=>note('تعذّر '+what+' '+r.b
 const dq=()=>{if(DT)return;DT=setTimeout(()=>{DT=0;draw()},200)};
 function draw(){
  if(!ready||(needLock()&&!un)){$('#app').innerHTML='';return}
- ensureSN();bellUpd();
+ ensureSN();ensureAsn();bellUpd();
  const isM=cu&&cu.r=='maintenance',isP=isPur();
  if(isM)tab='m';if(isP)tab='pu';
  chkMntAlerts();chkRepAlerts();
- const T=A.length,M=A.filter(a=>a.mnt).length,U=A.filter(a=>!a.mnt&&!a.room).length,foc=document.activeElement?.id=='s';
+ const T=A.length,M=A.filter(a=>a.mnt).length,U=A.filter(a=>!a.mnt&&!a.room).length,foc=(['s','fq'].includes(document.activeElement?.id)?document.activeElement.id:'');
  const rooms=allRooms(),cats=allCats();
  $('#app').innerHTML=`<datalist id="rl">${rooms.map(r=>`<option value="${esc(r)}">`).join('')}</datalist><datalist id="cl">${cats.map(r=>`<option value="${esc(r)}">`).join('')}</datalist><datalist id="wl">${WORKSHOPS.map(r=>`<option value="${esc(r)}">`).join('')}</datalist>
- ${isM?`<div class="top"><b>طلبات الصيانة</b></div>`:isP?`<div class="top"><b>${PT=='a'?'المشتريات — حساب العملاء':'المشتريات — أوردرات الصيانة الخارجية'}</b></div>`:tab=='h'?'':topbar()}`+(isM?mTabs()+(MT=='d'?vDecM():vM()):isP?pTabs()+(PT=='a'?vAcc():vPur()):tab=='h'?vH():tab=='a'?vA():tab=='g'?vG():tab=='r'?vR():tab=='v'?vV():tab=='p'&&cu&&cu.r=='admin'?vP():tab=='s'&&cu&&cu.r=='admin'?vAcc():tab=='x'&&cu&&cu.r=='admin'?vX():vO());
- if(foc&&$('#s'))$('#s').focus()
+ ${isM?`<div class="top"><b>طلبات الصيانة</b></div>`:isP?`<div class="top"><b>${PT=='a'?'المشتريات — حساب العملاء':'المشتريات — أوردرات الصيانة الخارجية'}</b></div>`:tab=='h'?'':topbar()}`+(isM?mTabs()+(MT=='d'?vDecM():vM()):isP?pTabs()+(PT=='a'?vAcc():vPur()):tab=='h'?vH():tab=='a'?vA():tab=='f'?vF():tab=='g'?vG():tab=='r'?vR():tab=='v'?vV():tab=='p'&&cu&&cu.r=='admin'?vP():tab=='s'&&cu&&cu.r=='admin'?vAcc():tab=='x'&&cu&&cu.r=='admin'?vX():vO());
+ if(foc&&$('#'+foc)){const _e=$('#'+foc);_e.focus();try{_e.setSelectionRange(_e.value.length,_e.value.length)}catch(_x){}}
 }
 function chkMntAlerts(){
  if(!(cu&&cu.r=='maintenance'))return;
@@ -1701,11 +1805,14 @@ document.addEventListener('click',e=>{
  if(x=='delno')return delDecide(b.dataset.i,false);
  if(x=='addg'){const v=($('#gn').value||'').trim();if(!v)return note('اكتب اسم المجموعة');if(allGroups().includes(v))return note('المجموعة موجودة بالفعل');return addGroup(v)}
  if(x=='gadd'){const g=b.dataset.i||'';return ask('🚪 إضافة غرف'+(g?' إلى «'+esc(g)+'»':''),[{l:'أسماء الغرف',h:'غرفة واحدة، أو عدة غرف بفاصلة، أو نطاق مثل 101-120',r:1,pv:v=>{const L=parseRooms(v);return L.length?`<span class="pc">${L.length} غرفة ستُضاف</span>`+L.slice(0,60).map(r=>`<span>${esc(r)}</span>`).join('')+(L.length>60?'<span>…</span>':''):'<small class="s">اكتب اسم غرفة أو نطاقًا وسيظهر هنا ما سيُضاف</small>'}}],v=>{const L=parseRooms(v[0]);if(!L.length)return note('اكتب اسم الغرفة');addRooms(L,g);note('تمت إضافة '+L.length+' غرفة')})}
- if(x=='gren'){const g=b.dataset.i;return ask('تعديل اسم المجموعة',[{l:'الاسم الجديد',v:g,r:1}],v=>renGroup(g,v[0]))}
+ if(x=='gren'){if(!isAd())return note('هذه العملية للمدير فقط');const g=b.dataset.i;return ask('تعديل اسم المجموعة',[{l:'الاسم الجديد',v:g,r:1}],v=>renGroup(g,v[0]))}
  if(x=='gdel'){const g=b.dataset.i,n=R.filter(r=>RG[r]==g).length;return ask('حذف المجموعة',[],()=>delGroup(g),1,`<p>سيتم حذف المجموعة «${esc(g)}». الغرف بداخلها (${n}) لن تُحذف وستنتقل إلى «بدون مجموعة».</p>`)}
  if(x=='addc'){const v=($('#cn').value||'').trim();if(!v)return note('اكتب اسم المجموعة');if(allCats().includes(v))return note('المجموعة موجودة بالفعل');return addCat(v)}
  if(x=='cadd'){const g=b.dataset.i||'';return ask('إضافة أصناف إلى «'+esc(g)+'»',[{l:'اسم الصنف (لعدة أصناف افصل بفاصلة)',r:1}],v=>{const L=[...new Set(v[0].split(/[,،\n]/).map(t=>t.trim()).filter(Boolean))];if(!L.length)return;addItems(g,L);note('تمت إضافة '+L.length+' صنف')})}
- if(x=='iren'){const[g,n]=(b.dataset.i||'').split(SEP);return ask('تعديل اسم الصنف',[{l:'الاسم الجديد',v:n,r:1}],v=>renItem(g,n,v[0]))}
+ if(x=='cfl'){CF=b.dataset.i||'';return draw()}
+  if(x=='icls'){const[g,n]=(b.dataset.i||'').split(SEP);return ask('تصنيف «'+esc(n)+'»',[{l:'التصنيف',sel:CLS,v:clsOf(g,n),h:'يُحدَّد تلقائيًا من الاسم — غيّره هنا ليُحفظ لكل الفنادق. اختر «اختر…» للرجوع للتلقائي.'}],v=>{const k=g+SEP+n;if(v[0])KM[k]=v[0];else delete KM[k];draw();try{Promise.resolve(FBC('meta').doc('cls').set({m:KM})).catch(()=>note('تعذّر حفظ التصنيف'))}catch(e){}})}
+  if(x=='idist'){const[g,n]=(b.dataset.i||'').split(SEP);return showDist(g,n)}
+  if(x=='iren'){const[g,n]=(b.dataset.i||'').split(SEP);return ask('تعديل اسم الصنف',[{l:'الاسم الجديد',v:n,r:1}],v=>renItem(g,n,v[0]))}
  if(x=='idel'){const[g,n]=(b.dataset.i||'').split(SEP),k=A.filter(y=>y.cat==g&&y.name==n).length;return ask('حذف الصنف',[],()=>delItem(g,n),1,`<p>سيتم حذف الصنف «${esc(n)}»${k?` وكل ما وُزّع منه (${k} أصل) من الغرف`:''} نهائيًا.</p>`)}
  if(x=='wipe')return ask('حذف كل الأصول',[{l:'للتأكيد اكتب كلمة: حذف',r:1}],v=>{if(v[0]!='حذف')return note('لم يتم الحذف: كلمة التأكيد غير صحيحة');rmMany(A.map(y=>y.id)).then(()=>note('تم حذف كل الأصول'))},1,`<p>سيتم حذف جميع الأصول (${A.length}) نهائيًا من كل الغرف والمجموعات، ولا يمكن التراجع. المجموعات والأصناف والغرف تبقى كما هي.</p>`)
  if(x=='ra'){const it=itemsAll()[+$('#ci').value],q=parseInt($('#cq').value);if(!it)return note('اختر الصنف');if(!q||q<1)return note('اكتب العدد');return mkAssets(it,Math.min(q,1000),sel)}
@@ -1715,7 +1822,7 @@ document.addEventListener('click',e=>{
   if(x=='rdec')return ask('إنقاص «'+esc(t.name)+'»',[{l:'العدد المراد إزالته (الموجود '+t.list.length+')',v:'1',r:1}],v=>{const q=Math.min(parseInt(v[0])||0,t.list.length);if(q>0)rmMany(t.list.slice(-q).map(y=>y.id)).then(()=>note('تمت إزالة '+q))});
   return ask('حذف «'+esc(t.name)+'» من الغرفة',[],()=>rmMany(t.list.map(y=>y.id)),1,`<p>سيتم حذف كل القطع (${t.list.length}) من هذه الغرفة نهائيًا.</p>`)
  }
- if(x=='cren'){const c=b.dataset.i;return ask('تعديل اسم المجموعة',[{l:'الاسم الجديد',v:c,r:1}],v=>renCat(c,v[0]))}
+ if(x=='cren'){if(!isAd())return note('هذه العملية للمدير فقط');const c=b.dataset.i;return ask('تعديل اسم المجموعة',[{l:'الاسم الجديد',v:c,r:1}],v=>renCat(c,v[0]))}
  if(x=='cdel'){const c=b.dataset.i,n=A.filter(a=>a.cat==c).length;return ask('حذف المجموعة',[],()=>delCat(c),1,`<p>سيتم حذف مجموعة «${esc(c)}». الأصول بداخلها (${n}) لن تُحذف وستنتقل إلى «بدون فئة».</p>`)}
  if(x=='bkdel'||x=='bkst'||x=='bksend'||x=='bktr'||x=='bkdc'){
   const ids=[...document.querySelectorAll('.sk:checked')].map(e=>e.value);if(!ids.length)return note('حدد الأصول أولًا');
@@ -1764,7 +1871,7 @@ document.addEventListener('click',e=>{
  if(x=='open'){sel=b.dataset.i;tab='v';return draw()}
  if(x=='bk'){tab='r';return draw()}
  if(x=='newr')return edit(null,sel);
- if(x=='repo'){const no=b.dataset.i,r=repList().find(y=>String(y.no)==String(no));if(r&&SEEN_RP){SEEN_RP.add(r.key);rpSave()}printReport(no);setTimeout(()=>{try{window.print()}catch(e){}},250);return draw()}
+ if(x=='repo'){const no=b.dataset.i,r=repList().find(y=>String(y.no)==String(no));if(r&&SEEN_RP){SEEN_RP.add(r.key);rpSave()}printReport(no);return draw()}
  if(x=='trp')return printTransfer(b.dataset.i);
  if(x=='dcp')return printDecom(b.dataset.i);
  if(x=='dcok')return decOk(b.dataset.i);
@@ -1779,7 +1886,7 @@ document.addEventListener('click',e=>{
   const L=A.filter(y=>!y.mnt&&y.room==sel);if(!L.length)return note('الغرفة فارغة');
   const g=grp(L),ks=Object.keys(g).sort(nat),p=$('#pr');
   p.innerHTML=`<div class="np"><button class="p" data-x="doprint">🖨 طباعة</button><button data-x="clp">إغلاق</button></div><div class="pg"><div class="ph"><img src="${LOCKUP}" alt="SRNTY"><div><small>جرد محتويات الغرفة</small><b>${esc(sel)}</b></div></div><div class="pb"><div class="st"><div>التاريخ<b>${fmt(new Date())}</b></div><div>عدد الأصناف<b>${ks.length}</b></div><div>إجمالي القطع<b>${L.length}</b></div></div><table><tr><th class="m">م<th>الصنف<th class="c">العدد</tr>${ks.map((k,i)=>`<tr><td class="m">${i+1}<td>${esc(k)}<td class="c">${g[k].n}</tr>`).join('')}<tr class="tt"><th><th>الإجمالي<th class="c">${L.length}</tr></table><div class="sg"><div>المسؤول</div><div>المراجع</div><div>التوقيع</div></div></div><div class="ft">مجموعة فنادق سيرينتي · إدارة الأصول الثابتة</div></div>`;
-  p.classList.add('on');p.scrollTop=0;setTimeout(()=>{try{window.print()}catch(e){}},250);return
+  p.classList.add('on');p.scrollTop=0;return
  }
  if(x=='xl')return rexp(sel);
  if(x=='gxl'){const g=b.dataset.i||'',rs=allRooms().filter(r=>(RG[r]||'')==g&&!A.some(a=>a.room==r||(a.mnt&&a.from==r)));return ask('⬇ تصدير شيت '+(g?'«'+esc(g)+'»':'بدون مجموعة'),[{l:'عدد الصفحات الفاضية للإضافة',v:'5',h:'سيُصدَّر '+rs.length+' غرفة فاضية + الصفحات التي تحددها. الغرف المليانة تُصدَّر من داخل الغرفة نفسها.'}],v=>rexp(rs,g||'بدون مجموعة',Math.max(0,Math.min(50,parseInt(v[0])||0))))}
@@ -1788,6 +1895,7 @@ document.addEventListener('click',e=>{
  if(x=='rnum')return rnumExp();
  if(x=='rimp')return impRooms();
  if(x=='addr'){const t=A.find(y=>y.id==$('#qa').value);return t?doMove(t,sel):note('اختر الأصل')}
+ if(x=='renroom'){if(!isAd())return note('هذه العملية للمدير فقط');const r=sel;return ask('تعديل اسم الغرفة',[{l:'الاسم الجديد',v:r,r:1,h:'ينتقل كل ما بداخل الغرفة من أصول للاسم الجديد تلقائيًا'}],v=>renRoom(r,v[0]))}
  if(x=='delroom'){
   
   const r=sel,L=A.filter(y=>!y.mnt&&y.room==r),M=A.filter(y=>y.mnt&&y.from==r).length;
@@ -1828,7 +1936,7 @@ $('#lg0').src=LOGO;lockUI();draw();init();
 </script>
 <script>
 (function(){
-const D={"حسابات الموردين": "Supplier Accounts", "حساب العملاء": "Vendor Accounts", "كشف الحساب": "Statement", "كشف حساب": "Account Statement", "كل الموردين": "All vendors", "الرصيد المستحق": "Balance due", "المستحق للمورد": "Due to vendor", "إجمالي المعاملات": "Total transactions", "أوردرات الصيانة": "Maintenance orders", "الرئيسية": "Home", "الغرف": "Rooms", "الأصول": "Assets", "الأذونات": "Orders", "الفئات والأصناف": "Categories & Items", "الصيانة": "Maintenance", "تقارير الصيانة": "Maintenance Reports", "المستخدمون": "Users", "خروج": "Logout", "دخول": "Login", "تسجيل الدخول": "Sign in", "اسم المستخدم": "Username", "كلمة المرور": "Password", "نسيت كلمة المرور؟": "Forgot password?", "البريد الإلكتروني": "Email", "تغيير كلمة المرور": "Change password", "إغلاق": "Close", "إلغاء": "Cancel", "تأكيد": "Confirm", "حذف": "Delete", "تعديل": "Edit", "إضافة": "Add", "حفظ": "Save", "نقل": "Move", "سجل": "History", "إنشاء الحساب": "Create account", "اسم الأصل": "Asset name", "اسم الغرفة": "Room name", "رقم الغرفة": "Room number", "الكود": "Code", "العدد": "Qty", "المجموعة": "Group", "المقاس": "Size", "الموديل": "Model", "الحالة": "Status", "الفئة": "Category", "ملاحظات": "Notes", "التاريخ": "Date", "الإجمالي": "Total", "إجمالي الأصول": "Total assets", "إجمالي القطع": "Total pieces", "في الصيانة": "In maintenance", "في المخزن": "In store", "المخزن": "Store", "أصل": "Asset", "صنف": "Item", "غرفة": "Room", "مجموعة": "Group", "بدون مجموعة": "No group", "غرفة جديدة": "New room", "غرفة موجودة": "Existing room", "أصل جديد": "New asset", "الورشة": "Workshop", "أُعيد إلى": "Returned to", "العمل المنجز": "Work done", "جديد": "New", "تعليمات": "Instructions", "مدير": "Admin", "مستخدم": "User", "صيانة": "Maintenance", "+ أصل جديد": "+ New asset", "➕ أصل جديد": "➕ New asset", "+ إضافة غرف": "+ Add rooms", "+ إضافة مجموعة": "+ Add group", "+ صنف": "+ Item", "✏️ تعديل الأصل": "✏️ Edit asset", "⬇ تصدير شيت المجموعة": "⬇ Export group sheet", "⬇ تصدير شيت الغرفة": "⬇ Export room sheet", "⬇ تصدير كل الغرف": "⬇ Export all rooms", "⬇ قائمة أرقام الغرف": "⬇ Room numbers list", "⬇ تصدير الأصول": "⬇ Export assets", "⬆ استيراد غرف من Excel": "⬆ Import rooms from Excel", "استيراد من Excel": "Import from Excel", "رفع شيت الغرف": "Upload rooms sheet", "⬇ نموذج غرفة": "⬇ Room template", "إرسال المحدد للصيانة": "Send selected to maintenance", "إنهاء الصيانة": "Finish maintenance", "🖨 طباعة الإذن": "🖨 Print order", "🖨 طباعة التقرير": "🖨 Print report", "🖨 طباعة تقرير الصيانة": "🖨 Print maintenance report", "🖨 طباعة": "🖨 Print", "تمييز الكل كمقروء": "Mark all as read", "→ كل الغرف": "→ All rooms", "→ المجموعات": "→ Groups", "🗑 حذف الغرفة": "🗑 Delete room", "حذف الغرفة": "Delete room", "حذف الأصل": "Delete asset", "حذف الصنف": "Delete item", "حذف المحدد": "Delete selected", "حذف الكل": "Delete all", "إرجاع المحدد للمخزن": "Return selected to store", "مسح الأعداد": "Clear counts", "دخول الغرفة": "Open room", "دخول المجموعة": "Open group", "إضافة للغرفة": "Add to room", "أرقام الغرف": "Room numbers", "أسماء الغرف": "Room names", "عدد الأصول": "Asset count", "عدد الأصناف": "Item count", "غرف سيرينتي": "Serenity rooms", "أصول سيرينتي": "Serenity assets", "الغرف المسجلة": "Registered rooms", "طلبات الصيانة": "Maintenance requests", "طلب صيانة جديد": "New maintenance request", "تقرير صيانة جديد": "New maintenance report", "تقرير الصيانة": "Maintenance report", "إذن رقم": "Order no.", "رقم الإذن": "Order no.", "رقم الأصل": "Asset no.", "نوع الصيانة": "Maintenance type", "داخل الفندق": "Inside the hotel", "OUT GOING — إصلاح خارج الفندق": "OUT GOING — repair outside the hotel", "سبب الصيانة / العطل": "Maintenance reason / fault", "المكان المنقول إليه": "Moved to", "اسم مستلم الإذن": "Order receiver name", "إرسال للصيانة — إذن جديد": "Send to maintenance — new order", "اسم مجموعة الغرف": "Room group name", "لا توجد نتائج": "No results", "لا توجد أصول": "No assets", "الغرفة فارغة": "The room is empty", "جارٍ التحميل…": "Loading…", "جارٍ التطبيق…": "Applying…", "لا توجد طلبات صيانة حاليًا": "No maintenance requests right now", "لا توجد تقارير صيانة بعد": "No maintenance reports yet", "لا توجد أصول بعد. ابدأ بإضافة أول أصل.": "No assets yet. Start by adding the first asset.", "ابدأ بإضافة مجموعة، ثم ادخلها وأضف غرفها": "Start by adding a group, then open it and add its rooms", "تعذّر الحفظ": "Save failed", "تعذّر الحذف": "Delete failed", "تم تطبيق الشيت": "Sheet applied", "تمت الإضافة:": "Added:", "تقارير الصيانة الجاهزة للطباعة": "Maintenance reports ready to print", "اسم المستخدم أو كلمة المرور غير صحيحة": "Wrong username or password", "مرحبًا": "Welcome", "اختر الأصل": "Select asset", "اختر الصنف": "Select item", "اختر…": "Select…", "اختياري": "Optional", "بحث بالكود أو الاسم أو الغرفة": "Search by code, name or room", "🔍 ابحث عن غرفة بالاسم أو الرقم": "🔍 Find a room by name or number", "اكتب رقم الإذن للبحث": "Type the order number to search", "الحسابات والصلاحيات": "Accounts & permissions", "إدارة الأصول الثابتة لمجموعة فنادق سيرينتي": "Fixed asset management — Serenity Hotels Group", "مجموعة فنادق سيرينتي · إدارة الأصول الثابتة": "Serenity Hotels Group · Fixed asset management", "عدد الصفحات الفاضية للإضافة": "Number of blank pages to add", "صفحة فاضية": "Blank page", "أوراق تم تجاهلها:": "Ignored sheets:", "كلمة المرور الحالية": "Current password", "كلمة مرور جديدة": "New password", "تأكيد كلمة المرور": "Confirm password", "تأكيد الحذف": "Confirm delete", "هل تريد": "Do you want", "الأذونات الخارجية والتكلفة": "External orders & cost", "الأذونات الخارجية بالتكلفة": "External orders with cost", "قيود اليومية": "Journal entries", "المشتريات": "Purchasing", "أوردرات الصيانة الخارجية": "External maintenance orders", "تأكيد خروج الأوردر": "Confirm order left", "تأكيد الرجوع وإدخال التكلفة": "Confirm return & enter cost", "لم يخرج بعد": "Not left yet", "خرج للصيانة": "Out for maintenance", "الغرفة الأصلية": "Original room", "إجمالي التكلفة": "Total cost", "مدفوع نقدًا": "Paid in cash", "آجل مستحق": "Payable on credit", "مستحقات الموردين": "Vendor payables", "مصروف صيانة خارجية": "External maintenance expense", "الصندوق / النقدية": "Cash", "مدين": "Debit", "دائن": "Credit", "كل الفترات": "All periods", "هذا الشهر": "This month", "الشهر الماضي": "Last month", "كل طرق الدفع": "All payment methods", "نقدًا": "Cash", "آجل": "On credit", "⬇ تصدير Excel": "⬇ Export Excel", "أوردر خارجي": "External order", "جزء من الأصل": "Part of asset", "جزء خارج للصيانة": "Part out for maintenance", "تم إصلاح الجزء": "Part repaired", "أجزاء أصول بانتظار الصيانة الداخلية": "Asset parts awaiting internal maintenance", "إجمالي تكلفة الصيانة على الأصل": "Total maintenance cost on asset", "اسم الجزء": "Part name", "الأذونات الخارجية": "External orders"};
+const D={"حفظ PDF":"Save PDF","جارٍ تجهيز ملف PDF…":"Preparing PDF…","تم حفظ الملف على الجهاز":"File saved to your device","لا يوجد تقرير":"No report","طباعة":"Print","توزيع الأصل على الغرف":"Asset distribution by room","حسابات الموردين": "Supplier Accounts", "حساب العملاء": "Vendor Accounts", "كشف الحساب": "Statement", "كشف حساب": "Account Statement", "كل الموردين": "All vendors", "الرصيد المستحق": "Balance due", "المستحق للمورد": "Due to vendor", "إجمالي المعاملات": "Total transactions", "أوردرات الصيانة": "Maintenance orders", "الرئيسية": "Home", "الغرف": "Rooms", "الأصول": "Assets", "الأذونات": "Orders", "الفئات والأصناف": "Categories & Items", "الصيانة": "Maintenance", "تقارير الصيانة": "Maintenance Reports", "المستخدمون": "Users", "خروج": "Logout", "دخول": "Login", "تسجيل الدخول": "Sign in", "اسم المستخدم": "Username", "كلمة المرور": "Password", "نسيت كلمة المرور؟": "Forgot password?", "البريد الإلكتروني": "Email", "تغيير كلمة المرور": "Change password", "إغلاق": "Close", "إلغاء": "Cancel", "تأكيد": "Confirm", "حذف": "Delete", "تعديل": "Edit", "إضافة": "Add", "حفظ": "Save", "نقل": "Move", "سجل": "History", "إنشاء الحساب": "Create account", "اسم الأصل": "Asset name", "اسم الغرفة": "Room name", "رقم الغرفة": "Room number", "الكود": "Code", "العدد": "Qty", "المجموعة": "Group", "المقاس": "Size", "الموديل": "Model", "الحالة": "Status", "الفئة": "Category", "ملاحظات": "Notes", "التاريخ": "Date", "الإجمالي": "Total", "إجمالي الأصول": "Total assets", "إجمالي القطع": "Total pieces", "في الصيانة": "In maintenance", "في المخزن": "In store", "المخزن": "Store", "أصل": "Asset", "صنف": "Item", "غرفة": "Room", "مجموعة": "Group", "بدون مجموعة": "No group", "غرفة جديدة": "New room", "غرفة موجودة": "Existing room", "أصل جديد": "New asset", "الورشة": "Workshop", "أُعيد إلى": "Returned to", "العمل المنجز": "Work done", "جديد": "New", "تعليمات": "Instructions", "مدير": "Admin", "مستخدم": "User", "صيانة": "Maintenance", "+ أصل جديد": "+ New asset", "➕ أصل جديد": "➕ New asset", "+ إضافة غرف": "+ Add rooms", "+ إضافة مجموعة": "+ Add group", "+ صنف": "+ Item", "✏️ تعديل الأصل": "✏️ Edit asset", "⬇ تصدير شيت المجموعة": "⬇ Export group sheet", "⬇ تصدير شيت الغرفة": "⬇ Export room sheet", "⬇ تصدير كل الغرف": "⬇ Export all rooms", "⬇ قائمة أرقام الغرف": "⬇ Room numbers list", "⬇ تصدير الأصول": "⬇ Export assets", "⬆ استيراد غرف من Excel": "⬆ Import rooms from Excel", "استيراد من Excel": "Import from Excel", "رفع شيت الغرف": "Upload rooms sheet", "⬇ نموذج غرفة": "⬇ Room template", "إرسال المحدد للصيانة": "Send selected to maintenance", "إنهاء الصيانة": "Finish maintenance", "🖨 طباعة الإذن": "🖨 Print order", "🖨 طباعة التقرير": "🖨 Print report", "🖨 طباعة تقرير الصيانة": "🖨 Print maintenance report", "🖨 طباعة": "🖨 Print", "تمييز الكل كمقروء": "Mark all as read", "→ كل الغرف": "→ All rooms", "→ المجموعات": "→ Groups", "🗑 حذف الغرفة": "🗑 Delete room", "حذف الغرفة": "Delete room", "حذف الأصل": "Delete asset", "حذف الصنف": "Delete item", "حذف المحدد": "Delete selected", "حذف الكل": "Delete all", "إرجاع المحدد للمخزن": "Return selected to store", "مسح الأعداد": "Clear counts", "دخول الغرفة": "Open room", "دخول المجموعة": "Open group", "إضافة للغرفة": "Add to room", "أرقام الغرف": "Room numbers", "أسماء الغرف": "Room names", "عدد الأصول": "Asset count", "عدد الأصناف": "Item count", "غرف سيرينتي": "Serenity rooms", "أصول سيرينتي": "Serenity assets", "الغرف المسجلة": "Registered rooms", "طلبات الصيانة": "Maintenance requests", "طلب صيانة جديد": "New maintenance request", "تقرير صيانة جديد": "New maintenance report", "تقرير الصيانة": "Maintenance report", "إذن رقم": "Order no.", "رقم الإذن": "Order no.", "رقم الأصل": "Asset no.", "نوع الصيانة": "Maintenance type", "داخل الفندق": "Inside the hotel", "OUT GOING — إصلاح خارج الفندق": "OUT GOING — repair outside the hotel", "سبب الصيانة / العطل": "Maintenance reason / fault", "المكان المنقول إليه": "Moved to", "اسم مستلم الإذن": "Order receiver name", "إرسال للصيانة — إذن جديد": "Send to maintenance — new order", "اسم مجموعة الغرف": "Room group name", "لا توجد نتائج": "No results", "لا توجد أصول": "No assets", "الغرفة فارغة": "The room is empty", "جارٍ التحميل…": "Loading…", "جارٍ التطبيق…": "Applying…", "لا توجد طلبات صيانة حاليًا": "No maintenance requests right now", "لا توجد تقارير صيانة بعد": "No maintenance reports yet", "لا توجد أصول بعد. ابدأ بإضافة أول أصل.": "No assets yet. Start by adding the first asset.", "ابدأ بإضافة مجموعة، ثم ادخلها وأضف غرفها": "Start by adding a group, then open it and add its rooms", "تعذّر الحفظ": "Save failed", "تعذّر الحذف": "Delete failed", "تم تطبيق الشيت": "Sheet applied", "تمت الإضافة:": "Added:", "تقارير الصيانة الجاهزة للطباعة": "Maintenance reports ready to print", "اسم المستخدم أو كلمة المرور غير صحيحة": "Wrong username or password", "مرحبًا": "Welcome", "اختر الأصل": "Select asset", "اختر الصنف": "Select item", "اختر…": "Select…", "اختياري": "Optional", "بحث بالكود أو الاسم أو الغرفة": "Search by code, name or room", "🔍 ابحث عن غرفة بالاسم أو الرقم": "🔍 Find a room by name or number", "اكتب رقم الإذن للبحث": "Type the order number to search", "الحسابات والصلاحيات": "Accounts & permissions", "إدارة الأصول الثابتة لمجموعة فنادق سيرينتي": "Fixed asset management — Serenity Hotels Group", "مجموعة فنادق سيرينتي · إدارة الأصول الثابتة": "Serenity Hotels Group · Fixed asset management", "عدد الصفحات الفاضية للإضافة": "Number of blank pages to add", "صفحة فاضية": "Blank page", "أوراق تم تجاهلها:": "Ignored sheets:", "كلمة المرور الحالية": "Current password", "كلمة مرور جديدة": "New password", "تأكيد كلمة المرور": "Confirm password", "تأكيد الحذف": "Confirm delete", "هل تريد": "Do you want", "الأذونات الخارجية والتكلفة": "External orders & cost", "الأذونات الخارجية بالتكلفة": "External orders with cost", "قيود اليومية": "Journal entries", "المشتريات": "Purchasing", "أوردرات الصيانة الخارجية": "External maintenance orders", "تأكيد خروج الأوردر": "Confirm order left", "تأكيد الرجوع وإدخال التكلفة": "Confirm return & enter cost", "لم يخرج بعد": "Not left yet", "خرج للصيانة": "Out for maintenance", "الغرفة الأصلية": "Original room", "إجمالي التكلفة": "Total cost", "مدفوع نقدًا": "Paid in cash", "آجل مستحق": "Payable on credit", "مستحقات الموردين": "Vendor payables", "مصروف صيانة خارجية": "External maintenance expense", "الصندوق / النقدية": "Cash", "مدين": "Debit", "دائن": "Credit", "كل الفترات": "All periods", "هذا الشهر": "This month", "الشهر الماضي": "Last month", "كل طرق الدفع": "All payment methods", "نقدًا": "Cash", "آجل": "On credit", "⬇ تصدير Excel": "⬇ Export Excel", "أوردر خارجي": "External order", "جزء من الأصل": "Part of asset", "جزء خارج للصيانة": "Part out for maintenance", "تم إصلاح الجزء": "Part repaired", "أجزاء أصول بانتظار الصيانة الداخلية": "Asset parts awaiting internal maintenance", "إجمالي تكلفة الصيانة على الأصل": "Total maintenance cost on asset", "اسم الجزء": "Part name", "الأذونات الخارجية": "External orders"};
 const P=Object.keys(D).filter(k=>k.length>=6).sort((a,b)=>b.length-a.length),RE=new RegExp(P.map(k=>k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|'),'g'),AR=/[\u0600-\u06FF]/,orig=new Map(),AT=['placeholder','title','aria-label'];
 const st=(k,v)=>{try{v==null?localStorage.getItem(k):localStorage.setItem(k,v)}catch(e){}},gt=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
 let lang=gt('lang')||'ar';const R=document.documentElement;
@@ -1848,6 +1956,165 @@ const th=gt('theme');if(th)R.dataset.theme=th;
 mo.observe(document.body,{childList:true,subtree:true,characterData:true});
 setLang(lang,true);
 })();
+</script>
+<script>
+// ===== توزيع الأصل على الغرف (بحث بالاسم عبر كل الفنادق + تصدير Excel) =====
+const CLS=['الأساس / الأثاث','الإلكترونيات','الأجهزة الكهربائية','المفروشات','أخرى'];
+const CKW=[['الإلكترونيات','تلفزيون تليفزيون شاشه تيفي tv راوتر روتر مودم كمبيوتر لاب حاسب طابعه كاميرا ريسيفر رسيفر سماعه تليفون هاتف سنترال سويتش بروجكتر ايباد تابلت سيرفر dvr الكترون ups'],
+ ['الأجهزة الكهربائية','ثلاجه فريزر غساله مجفف مكيف تكييف سخان ميكروويف فرن بوتاجاز غلايه مروحه مكنسه شفاط دفايه خلاط محضر مكواه سشوار ماكينه عصاره تحميص مبرد كهرباء'],
+ ['المفروشات','سجاد سجاده موكيت ستاره ستائر ستاير مفرش بطانيه مرتبه وساده لحاف ملايه فوطه برنص ملاءه شرشف'],
+ ['الأساس / الأثاث','كرسي كراسي كنب كنبه ترابيزه طاوله سرير تخت دولاب خزانه مكتب كومود تسريحه رف ارفف انتريه مراه مرايه شماعه بنش مقعد سفره كاونتر مكتبه ركنه ستاند']];
+const autoCls=(c,n)=>{for(const t of [fnorm(n),fnorm(c)]){const W=t.split(' ').map(s=>s.replace(/^ال/,''));for(const[k,w]of CKW)if(w.split(' ').some(x=>{x=fnorm(x);return W.some(y=>y.startsWith(x))}))return k}return'أخرى'};
+let KM={},CF='';
+const clsOf=(c,n)=>KM[c+SEP+n]||autoCls(c,n);
+let FQ='',FD={rows:null,rm:{},busy:false,err:'',h:null,all:false};
+const fnorm=s=>String(s||'').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).toLowerCase().replace(/[\u064B-\u0652\u0640]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/\s+/g,' ').trim();
+const fHN=id=>{const h=(window.HOTELS||[]).find(y=>y.id==id);return h?h.name:id};
+async function loadF(){
+ if(FD.busy)return;
+ const sb=window.SBX;
+ if(!sb){FD.err='قاعدة البيانات غير متصلة';FD.rows=[];return}
+ FD.busy=true;FD.err='';const H=window.HOTEL_SEL||'';FD.h=H;
+ try{
+  const pull=async(tb)=>{const out=[];for(let off=0;;off+=1000){let q=sb.from(tb).select('id,hotel,data').order('id').order('hotel');if(H&&H!=='*')q=q.eq('hotel',H);const{data,error}=await q.range(off,off+999);if(error)throw error;out.push(...data);if(data.length<1000)break}return out};
+  const [a,r]=await Promise.all([pull('c_assets'),pull('c_rooms')]);
+  FD.rows=a.map(x=>({hotel:x.hotel||'',...(x.data||{})})).filter(x=>!x.dec&&x.name);
+  FD.rm={};r.forEach(x=>{const d=x.data||{};if(d.n)FD.rm[(x.hotel||'')+SEP+d.n]=d.g||''});
+ }catch(e){FD.err='تعذّر تحميل البيانات'+(e&&e.message?' ('+e.message+')':'');FD.rows=FD.rows||[]}
+ FD.busy=false;
+ if(tab=='f'||tab=='g')draw();
+}
+function fData(){
+ const q=fnorm(FQ),toks=q?q.split(' '):[];
+ let SR=FD.all?FD.rows:A;if(!toks.length||!SR)return[];
+ const cn=s=>fnorm(s).replace(/[^a-z0-9\u0600-\u06ff]/g,''),qn=cn(FQ);
+ if(qn){const ex=SR.filter(a=>!a.dec&&a.name&&[serOf(a),a.code,a.ocode,tyOf(a.isn)].some(c=>c&&cn(c)==qn));if(ex.length)SR=ex}
+ const G=new Map();
+ SR.forEach(a=>{
+  if(a.dec||!a.name)return;const hid=a.hotel||window.HOTEL_SEL||'';
+  const nm=String(a.name).trim(),k=fnorm(nm);
+  const ck=fnorm([tyOf(a.isn),serOf(a),a.code,a.ocode].join(' '));if(!toks.every(t=>k.includes(t)||ck.includes(t)))return;
+  let g=G.get(k);if(!g){g={name:nm,total:0,H:new Map(),isn:''};G.set(k,g)}
+  let h=g.H.get(hid);if(!h){h={id:hid,U:[]};g.H.set(hid,h)}
+  g.total++;h.U.push(a);if(!g.isn&&a.isn)g.isn=a.isn;
+ });
+ const ord=id=>{const i=(window.HOTELS||[]).findIndex(y=>y.id==id);return i<0?99:i};
+ return[...G.values()].sort((x,y)=>nat(x.name,y.name)).map(g=>({
+  name:g.name,total:g.total,isn:g.isn,
+  hotels:[...g.H.values()].sort((x,y)=>ord(x.id)-ord(y.id)).map(h=>{
+   // سيريال لكل قطعة داخل الفندق: 1، 2، 3… بترتيب الكود
+   const U=h.U.slice().sort((x,y)=>(+x.usn||0)-(+y.usn||0)||nat(x.code||'',y.code||'')).map(a=>({a,sr:serOf(a)}));
+   const rm=new Map(),st=[],mt=[];
+   U.forEach(u=>{if(u.a.mnt)mt.push(u.sr);else if(u.a.room){(rm.get(u.a.room)||rm.set(u.a.room,[]).get(u.a.room)).push(u.sr)}else st.push(u.sr)});
+   return{id:h.id,hn:fHN(h.id),total:U.length,first:serOf(U[0]&&U[0].a),last:serOf(U[U.length-1]&&U[U.length-1].a),store:st.length,mnt:mt.length,stSr:st,mtSr:mt,
+    rooms:[...rm.entries()].sort((x,y)=>nat(x[0],y[0])).map(([r,L])=>({r,n:L.length,sr:L,g:(FD.all?FD.rm[h.id+SEP+r]:RG[r])||''}))}
+  })
+ }));
+}
+const fSr=L=>{const P=L.filter(Boolean).map(c=>{const m=/^(AST-\d+)-(\d+)$/.exec(c);return m?{c,i:m[1],u:+m[2]}:{c}});const o=[];for(let k=0;k<P.length;){let e=k;while(e+1<P.length&&P[k].i!=null&&P[e+1].i===P[k].i&&P[e+1].u===P[e].u+1)e++;o.push(e>k?(e>k+1?P[k].c+' → '+P[e].c:P[k].c+'، '+P[e].c):P[k].c);k=e+1}return o.join('، ')};
+function fLines(g){ // صفوف الجدول (تُستخدم للعرض والتصدير)
+ const L=[];
+ g.hotels.forEach(h=>{
+  h.rooms.forEach(x=>L.push({h:h.hn,r:x.r,g:x.g,n:x.n,sr:fSr(x.sr)}));
+  if(h.mnt)L.push({h:h.hn,r:'في الصيانة',g:'',n:h.mnt,s:1,sr:fSr(h.mtSr)});
+  if(h.store)L.push({h:h.hn,r:'في المخزن',g:'',n:h.store,s:1,sr:fSr(h.stSr)});
+  L.push({h:h.hn,r:'إجمالي '+h.hn,g:'',n:h.total,t:1,sr:h.total>1?(h.first+' → '+h.last):(h.first||'')});
+ });
+ return L;
+}
+function fBody(){
+ if(FD.all&&FD.err&&!(FD.rows&&FD.rows.length))return`<div class="em">${esc(FD.err)}</div>`;
+ if(FD.all&&!FD.rows)return'<div class="em">جارٍ تحميل بيانات كل الفنادق…</div>';
+ if(!fnorm(FQ))return`<div class="em">اكتب اسم الأصل أو كوده (مثال: كرسي بلاستيك أو AST-001) لعرض توزيعه على الغرف في كل فندق<br><small>${(FD.all?FD.rows:A).length} أصل في ${esc(fHN(window.HOTEL_SEL))}</small></div>`;
+ const D=fData();
+ if(!D.length)return'<div class="em">لا يوجد أصل بهذا الاسم أو الكود</div>';
+ return D.map(g=>`<div class="rm"><h4>${esc(g.name)}<small>كود الصنف ${esc(tyOf(g.isn)||'—')} · الإجمالي ${g.total}</small></h4>
+  <div class="sc"><table><tr><th>الفندق<th>الغرفة<th>المجموعة<th>العدد<th>الكود</tr>${fLines(g).map(l=>`<tr${l.t?' style="background:var(--tint);font-weight:700"':''}><td>${esc(l.h)}<td>${l.s?`<span class="g w">${esc(l.r)}</span>`:esc(l.r)}<td>${esc(l.g)||'—'}<td><b>${l.n}</b><td>${esc(l.sr)||'—'}</tr>`).join('')}</table></div></div>`).join('');
+}
+function cSearch(){
+ if(FD.all&&FD.h!==null&&FD.h!==(window.HOTEL_SEL||'')&&!FD.busy){FD.rows=null;FD.rm={}}
+ if(FD.all&&fnorm(FQ)&&FD.rows==null&&!FD.busy)loadF();
+ return`<div class="hs"><div class="bar"><input id="fq" autocomplete="off" placeholder="ابحث عن أصل بالاسم أو الكود (مثال: كرسي أو AST-001)" value="${esc(FQ)}"><button data-f="all"${FD.all?' class="p"':''} title="يقرأ بيانات كل الفنادق من القاعدة (قراءة إضافية) — الافتراضي بحث في الفندق الحالي بدون أي قراءة">🏨 كل الفنادق</button></div><div id="fres">${cRes()}</div></div>`}
+const cTools=()=>fnorm(FQ)&&fData().length?'<div class="bar"><button data-f="go" class="p">⬇ تصدير Excel</button><button data-f="pr">🖨 طباعة</button>'+(FD.all?'<button data-f="rf">↻ تحديث</button>':'')+'</div>':'';
+const cRes=()=>fnorm(FQ)?cTools()+fBody():'';
+function vF(){
+ if(FD.h!==null&&FD.h!==(window.HOTEL_SEL||'')&&!FD.busy){FD.rows=null;FD.rm={}}
+ if(FD.rows==null&&!FD.busy)loadF();
+ const names=[...new Set((FD.rows||[]).map(x=>String(x.name).trim()))].sort(nat);
+ return`<datalist id="fnl">${names.map(n=>`<option value="${esc(n)}">`).join('')}</datalist>
+ <div class="bar"><input id="fq" list="fnl" autocomplete="off" placeholder="ابحث باسم الأصل أو كوده (مثال: كرسي بلاستيك أو AST-001)" value="${esc(FQ)}"><button data-f="go" class="p">⬇ تصدير Excel</button><button data-f="pr">🖨 طباعة</button><button data-f="rf">↻ تحديث</button></div>
+ <div id="fres">${fBody()}</div>`;
+}
+async function fExport(){
+ const D=fData();if(!D.length)return note('ابحث عن أصل أولًا');
+ const rows=[['الصنف','الفندق','الغرفة','المجموعة','العدد','الكود']];
+ D.forEach(g=>{fLines(g).forEach(l=>rows.push([g.name,l.h,l.r,l.g,l.n,l.sr]));rows.push([])});
+ const ws=XLSX.utils.aoa_to_sheet(rows);
+ ws['!cols']=[{wch:26},{wch:20},{wch:24},{wch:18},{wch:9},{wch:22}];
+ const wb=XLSX.utils.book_new();wb.Workbook={Views:[{RTL:true}]};
+ XLSX.utils.book_append_sheet(wb,ws,'توزيع الأصل');
+ await xlsxSave(wb,'توزيع_'+FQ.trim().replace(/[\\/:*?"<>|]/g,'_')+'.xlsx');
+}
+
+// ----- تقرير طباعة توزيع الأصل -----
+function fPrint(){
+ const D=fData();if(!D.length)return note('ابحث عن أصل أولًا');
+ const p=$('#pr'),hn=fHN(window.HOTEL_SEL),dt=fmt(new Date());
+ p.innerHTML='<div class="np"><button class="p" data-x="doprint">🖨 طباعة</button><button data-x="clp">إغلاق</button></div>'+D.map(g=>{
+  const L=fLines(g).filter(l=>!l.t);
+  return`<div class="pg"><div class="ph"><img src="${LOCKUP}" alt="SRNTY"><div><small>توزيع الأصل على الغرف · ${esc(hn)}</small><b>${esc(g.name)}</b></div></div><div class="pb"><div class="st"><div>التاريخ<b>${dt}</b></div><div>الفندق<b>${esc(hn)}</b></div><div>كود الصنف<b>${esc(tyOf(g.isn)||'—')}</b></div><div>إجمالي القطع<b>${g.total}</b></div></div><table><tr><th class="m">م<th>الغرفة<th>المجموعة<th class="c">العدد<th>الكود</tr>${L.map((l,i)=>`<tr><td class="m">${i+1}<td>${esc(l.r)}<td>${esc(l.g)||'—'}<td class="c">${l.n}<td>${esc(l.sr)||'—'}</tr>`).join('')}<tr class="tt"><th><th>الإجمالي<th><th class="c">${g.total}<th></tr></table><div class="sg"><div>المسؤول</div><div>المراجع</div><div>التوقيع</div></div></div><div class="ft">مجموعة فنادق سيرينتي · إدارة الأصول الثابتة</div></div>`}).join('');
+ p.classList.add('on');p.scrollTop=0;
+}
+
+// ===== حفظ أي تقرير كملف PDF على الجهاز (زر بجانب الطباعة في كل التقارير) =====
+const loadJs=src=>new Promise((ok,no)=>{const e=document.createElement('script');e.src=src;e.onload=ok;e.onerror=()=>no(new Error('load'));document.head.appendChild(e)});
+async function savePdf(){
+ const p=$('#pr'),pages=[...p.querySelectorAll('.pg')];
+ if(!pages.length)return note('لا يوجد تقرير');
+ note('جارٍ تجهيز ملف PDF…',30000);
+ try{
+  if(!window.html2canvas)await loadJs('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
+  if(!(window.jspdf&&window.jspdf.jsPDF))await loadJs('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+  const doc=new window.jspdf.jsPDF({unit:'mm',format:'a4',orientation:'p'}),W=794,PW=210,PH=297,PC=W*PH/PW;let first=true;
+  for(let n=0;n<pages.length;n++){
+   const pg=pages[n];let bps=[];
+   const scale=Math.max(.8,Math.min(2,15000/Math.max(pg.scrollHeight,1)));
+   const cv=await window.html2canvas(pg,{scale,backgroundColor:'#fff',useCORS:true,logging:false,windowWidth:900,onclone:d=>{
+    const pr=d.getElementById('pr');pr.style.cssText='display:block;position:absolute;left:0;top:0;right:auto;bottom:auto;width:'+W+'px;max-width:'+W+'px;padding:0;overflow:visible;background:#fff';
+    d.querySelectorAll('#pr .np').forEach(e=>e.style.display='none');
+    const cp=d.querySelectorAll('#pr .pg')[n];cp.style.cssText='width:'+W+'px;max-width:'+W+'px;margin:0;box-shadow:none;border-radius:0';
+    const top=cp.getBoundingClientRect().top;
+    cp.querySelectorAll('tr,.ph,.pb>div,.sg,.sg4,.ft').forEach(e=>bps.push(e.getBoundingClientRect().bottom-top));
+   }});
+   const k=cv.width/W,Hc=cv.height/k;let y=0;
+   while(y<Hc-.5){
+    let end=Math.min(y+PC,Hc);
+    if(end<Hc-.5){const c=bps.filter(b=>b>y+PC*.35&&b<=end);if(c.length)end=Math.max(...c)}
+    const sh=Math.max(1,Math.round((end-y)*k)),part=document.createElement('canvas');part.width=cv.width;part.height=sh;
+    const cx=part.getContext('2d');cx.fillStyle='#fff';cx.fillRect(0,0,part.width,sh);cx.drawImage(cv,0,Math.round(y*k),cv.width,sh,0,0,cv.width,sh);
+    if(!first)doc.addPage();first=false;
+    doc.addImage(part.toDataURL('image/jpeg',.92),'JPEG',0,0,PW,(end-y)*PW/W);
+    y=end;
+   }
+  }
+  const t=s=>(p.querySelector(s)||{}).textContent||'';
+  const nm=(t('.ph small')+' '+t('.ph b')+' '+new Date().toISOString().slice(0,10)).replace(/[\\/:*?"<>|]+/g,' ').replace(/\s+/g,' ').trim()||'تقرير';
+  doc.save(nm+'.pdf');note('تم حفظ الملف على الجهاز');
+ }catch(e){note('تعذّر تجهيز PDF (تأكد من الاتصال بالإنترنت) — أو اضغط طباعة ثم اختر «حفظ كـ PDF»',6000)}
+}
+// يضيف زر «حفظ PDF» تلقائيًا في شريط أي تقرير يُفتح
+(function(){const p=document.getElementById('pr');if(!p)return;
+ const fix=()=>{const np=p.querySelector('.np');if(np&&!np.querySelector('[data-f="pdf"]')){const b=document.createElement('button');b.setAttribute('data-f','pdf');b.textContent='💾 حفظ PDF';const pb=np.querySelector('[data-x="doprint"]');pb?pb.after(b):np.prepend(b)}};
+ new MutationObserver(fix).observe(p,{childList:true});fix()})();
+document.addEventListener('input',e=>{if(e.target&&e.target.id=='fq'){FQ=e.target.value;if(FD.all&&fnorm(FQ)&&!FD.rows&&!FD.busy)loadF();const r=$('#fres');if(r)r.innerHTML=cRes();const gl=$('#gl');if(gl)gl.hidden=!!fnorm(FQ)}});
+document.addEventListener('click',e=>{
+ const b=e.target.closest('[data-f]');if(!b)return;
+ if(b.dataset.f=='all'){FD.all=!FD.all;if(FD.all&&!FD.rows&&!FD.busy)loadF();return draw()}
+ if(b.dataset.f=='go')return fExport();
+ if(b.dataset.f=='pr')return fPrint();
+ if(b.dataset.f=='pdf')return savePdf();
+ if(b.dataset.f=='rf'){FD.rows=null;loadF();draw();return note('جارٍ التحديث…')}
+});
 </script>
 <script>
 (function(){const MIN=15;let tm,wm,armed=false,last=0;
